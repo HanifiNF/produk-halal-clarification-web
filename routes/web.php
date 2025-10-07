@@ -16,3 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// User resource routes (CRUD) - protected by auth
+Route::middleware(['auth'])->group(function () {
+    Route::resource('users', App\Http\Controllers\UserController::class);
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
