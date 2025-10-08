@@ -1,181 +1,193 @@
-# produk-halal-kp Laravel Application
+# QWEN.md - Produk Halal KP Project Context
 
 ## Project Overview
 
-This is a Laravel web application named "produk-halal-kp" (Halal Product - KP), built using Laravel 10.x framework. It's a halal product management system that includes user authentication and CRUD functionality for managing users. The application is built with PHP 8.1+ and uses modern development practices with Vite for asset bundling.
+This is a Laravel web application framework project named "produk-halal-kp", which appears to be designed for managing halal product information. It's built on Laravel 10.x with PHP 8.1+ and follows the Model-View-Controller (MVC) architectural pattern.
 
-## Architecture & Technologies
-
-- **Backend Framework**: Laravel 10.x
-- **Frontend Build Tool**: Vite
-- **Styling**: Bootstrap 5 with Sass
-- **JavaScript**: ES6+ with Axios for HTTP requests
-- **Database**: MySQL (default configuration)
-- **Authentication**: Laravel's built-in authentication system
-- **Package Manager**: Composer (PHP), NPM (JavaScript)
+The application includes user management functionality with full CRUD operations for users, authentication system, and is configured to work with a MySQL database as the default.
 
 ## Project Structure
 
 ```
-app/                      # Main application code
-├── Console/              # Artisan commands
-├── Exceptions/           # Exception handling
-├── Http/                 # Controllers, middleware
-│   ├── Controllers/
-│   └── Middleware/
-├── Models/               # Eloquent models
-└── Providers/            # Service providers
-config/                   # Laravel configuration files
-database/                 # Migrations, seeders, factories
-├── migrations/
-├── seeders/
-└── factories/
-public/                   # Public web assets
-resources/                # Views, JS, SASS files
-├── js/
-├── sass/
-└── views/
-├── auth/                 # Authentication views
-├── layouts/              # Layout templates
-├── users/                # User management views
-routes/                   # Application routes
-├── web.php               # Web routes
-├── api.php               # API routes
-├── console.php           # Console routes
-└── channels.php          # Broadcast channels
-storage/                  # Compiled views, logs, cache
-tests/                    # Unit and feature tests
+├── app/                    # Main application code
+│   ├── Console/           # Artisan console commands
+│   ├── Exceptions/        # Exception handling
+│   ├── Http/              # HTTP layer (controllers, middleware)
+│   ├── Models/            # Eloquent models
+│   └── Providers/         # Service providers
+├── bootstrap/             # Framework bootstrapping
+├── config/                # Configuration files
+├── database/              # Migrations, seeds, factories
+├── public/                # Public assets and entry point
+├── resources/             # Views, CSS, JS assets
+├── routes/                # Application routes
+├── storage/               # Compiled templates, logs, cache
+├── tests/                 # Automated tests
+├── artisan               # CLI interface
+├── composer.json         # PHP dependencies
+├── package.json          # Node.js dependencies
+├── .env                  # Environment configuration
+└── ...
 ```
 
-## Key Features
+## Key Configuration
 
-- User authentication system (login, register, logout)
-- User management with CRUD operations (protected by authentication)
-- Bootstrap 5 responsive UI framework
-- Modern asset compilation with Vite
-- Laravel's Eloquent ORM for database interactions
-- Database migrations and seeding
+- **Framework**: Laravel 10.x
+- **PHP Version**: ^8.1
+- **Database**: MySQL (default)
+- **Frontend Build**: Vite with Bootstrap and Sass
+- **Authentication**: Laravel Sanctum for API tokens
+- **Testing**: PHPUnit
 
-## Environment Configuration
+## Application Features
 
-The project uses .env files for configuration. The `.env.example` file includes:
-- Database configuration (MySQL default)
-- Cache and session settings
-- Mail configuration (using Mailpit in development)
-- Redis and queue settings
-- AWS settings (for file storage)
+### User Management
+- Full CRUD operations for users (create, read, update, delete)
+- User authentication system
+- Password hashing using Laravel's built-in hashing
+- Form validation for user data
+
+### Routing
+- Web routes in `routes/web.php`
+- API routes in `routes/api.php`
+- Route model binding using Laravel's resource routes
+
+### Middleware
+- Web middleware group for session, CSRF protection, etc.
+- API middleware group with rate limiting
+- Authentication middleware for protected routes
 
 ## Building and Running
 
-### Initial Setup:
+### Initial Setup
+```bash
+# Install PHP dependencies
+composer install
 
-1. Install PHP dependencies:
-   ```bash
-   composer install
-   ```
+# Install Node.js dependencies
+npm install
 
-2. Install Node.js dependencies:
-   ```bash
-   npm install
-   ```
+# Copy environment file
+cp .env.example .env
 
-3. Create environment file and generate app key:
-   ```bash
-   cp .env.example .env
-   php artisan key:generate
-   ```
+# Generate application key
+php artisan key:generate
 
-4. Configure database settings in `.env`
+# Configure database in .env
+# DB_CONNECTION=mysql
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=laravel
+# DB_USERNAME=root
+# DB_PASSWORD=
 
-5. Run database migrations:
-   ```bash
-   php artisan migrate
-   ```
+# Run database migrations
+php artisan migrate
 
-6. Seed the database (if needed):
-   ```bash
-   php artisan db:seed
-   ```
+# Seed database (if needed)
+php artisan db:seed
+```
 
-### Development Commands:
+### Development Commands
+```bash
+# Serve application locally
+php artisan serve
 
-- **Start development server**:
-  ```bash
-  php artisan serve
-  ```
+# Build frontend assets for development
+npm run dev
 
-- **Run development assets**:
-  ```bash
-  npm run dev
-  ```
+# Build frontend assets for production
+npm run build
 
-- **Build assets for production**:
-  ```bash
-  npm run build
-  ```
+# Run tests
+php artisan test
+# or
+./vendor/bin/phpunit
 
-- **Run tests**:
-  ```bash
-  php artisan test
-  # or
-  ./vendor/bin/phpunit
-  ```
+# Run specific migration
+php artisan migrate
 
-### Common Artisan Commands:
+# Rollback migrations
+php artisan migrate:rollback
+```
 
-- **Create migration**:
-  ```bash
-  php artisan make:migration create_table_name_table
-  ```
+### Common Artisan Commands
+```bash
+# Clear application cache
+php artisan cache:clear
 
-- **Create controller**:
-  ```bash
-  php artisan make:controller ControllerName
-  ```
+# Clear configuration cache
+php artisan config:clear
 
-- **Create model**:
-  ```bash
-  php artisan make:model ModelName
-  ```
+# Clear route cache
+php artisan route:clear
 
-- **Clear caches**:
-  ```bash
-  php artisan cache:clear
-  php artisan config:clear
-  php artisan route:clear
-  php artisan view:clear
-  ```
+# Clear view cache
+php artisan view:clear
 
-## Routing
+# Run database migrations
+php artisan migrate
 
-- **Web routes**: Defined in `routes/web.php`
-- **API routes**: Defined in `routes/api.php`
-- Main route: `/` displays the welcome page
-- Authentication routes: `/login`, `/register`, `/home` (protected)
-- User CRUD routes: `/users` (protected by auth middleware)
+# Create a new migration
+php artisan make:migration create_table_name_table
 
-## Views & Frontend
+# Create a new model
+php artisan make:model ModelName
 
-- **Template Engine**: Blade
-- **Main Layout**: `resources/views/layouts/app.blade.php`
-- **Authentication Views**: `resources/views/auth/`
-- **User Views**: `resources/views/users/`
-- **Frontend Assets**: Processed by Vite with Sass preprocessing
+# Create a new controller
+php artisan make:controller ControllerName
+```
 
 ## Development Conventions
 
-- Laravel coding standards
-- PSR-4 autoloading
-- MVC architecture pattern
-- Repository pattern (if implemented)
-- Blade template syntax for views
-- Eloquent ORM for database operations
-- Vite for asset compilation
-- Bootstrap for responsive styling
+### Coding Standards
+- Follows PSR-4 autoloading standards
+- Laravel coding conventions
+- Uses Pint (Laravel's coding style fixer) as development dependency
 
-## Testing
+### Architecture Patterns
+- MVC architecture
+- Repository pattern encouraged
+- Service providers for application bootstrapping
+- Resource controllers for CRUD operations
 
-- PHPUnit for unit and feature testing
-- Laravel's testing tools
-- Faker for generating test data
-- Test files in `tests/` directory
+### Security
+- Passwords are hashed using Laravel's hashing
+- CSRF protection enabled by default
+- SQL injection prevention through Eloquent ORM
+- Input validation using Form Request classes
+
+## Key Dependencies
+
+### PHP Dependencies
+- Laravel Framework (^10.10)
+- Laravel Sanctum (^3.3) for API authentication
+- Laravel Tinker (^2.8) for REPL
+- Guzzle HTTP client (^7.2)
+
+### Frontend Dependencies
+- Vite (>=6.0.0) for asset building
+- Bootstrap (^5.2.3) for CSS framework
+- Axios (^1.6.4) for HTTP requests
+- @popperjs/core (^2.11.6) for Bootstrap components
+- Sass (^1.56.1) for CSS preprocessing
+
+## File Locations
+
+### Important Files
+- `routes/web.php` - Main web routes
+- `routes/api.php` - API routes
+- `app/Http/Kernel.php` - Middleware configuration
+- `app/Providers/RouteServiceProvider.php` - Route configuration
+- `config/database.php` - Database configuration
+- `config/app.php` - Main application configuration
+
+### Views
+- `resources/views/` - Blade templates
+- `resources/views/users/` - User management views
+- `resources/views/welcome.blade.php` - Default welcome page
+
+### Asset Files
+- `resources/sass/app.scss` - Main SCSS file
+- `resources/js/app.js` - Main JavaScript file
+- `vite.config.js` - Vite build configuration
