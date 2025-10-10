@@ -25,3 +25,8 @@ Route::middleware(['auth'])->group(function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Admin dashboard route - protected by both auth and admin middleware
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/dashboard', [App\Http\Controllers\AdminDashboardController::class, 'index'])->name('admin.dashboard');
+});

@@ -37,6 +37,15 @@ class UserController extends Controller
         ]);
 
         $data['password'] = Hash::make($data['password']);
+        
+        // Default values for admin and data_access when creating a new user
+        $data['admin'] = false;
+        $data['data_access'] = false;
+        
+        // Only allow admin users to set data_access field
+        if (auth()->user()->admin) {
+            $data['data_access'] = $request->input('data_access') == 1;
+        }
 
         User::create($data);
 
@@ -74,6 +83,11 @@ class UserController extends Controller
             $data['password'] = Hash::make($data['password']);
         } else {
             unset($data['password']);
+        }
+
+        // Only allow admin users to update data_access field
+        if (auth()->user()->admin) {
+            $data['data_access'] = $request->input('data_access') == 1;
         }
 
         $user->update($data);

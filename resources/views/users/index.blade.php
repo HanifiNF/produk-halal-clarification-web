@@ -17,6 +17,8 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Admin</th>
+                <th>Data Access</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -26,6 +28,8 @@
                 <td>{{ $user->id }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
+                <td>{{ $user->admin ? 'Yes' : 'No' }}</td>
+                <td>{{ $user->data_access ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ route('users.show', $user) }}" class="btn btn-sm btn-secondary">View</a>
                     <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-warning">Edit</a>

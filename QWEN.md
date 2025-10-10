@@ -46,16 +46,25 @@ The application includes user management functionality with full CRUD operations
 - User authentication system
 - Password hashing using Laravel's built-in hashing
 - Form validation for user data
+- Admin dashboard accessible only to users with admin privileges
+- Role-based access control with 'admin' and 'data_access' boolean fields
+
+### User Roles and Permissions
+- Regular users: Can log in and access standard user features
+- Admin users: Can access admin dashboard and manage other users
+- Data access users: Have special data access permissions as determined by the 'data_access' field
 
 ### Routing
 - Web routes in `routes/web.php`
 - API routes in `routes/api.php`
 - Route model binding using Laravel's resource routes
+- Admin-specific routes protected by custom 'admin' middleware
 
 ### Middleware
 - Web middleware group for session, CSRF protection, etc.
 - API middleware group with rate limiting
 - Authentication middleware for protected routes
+- Custom 'admin' middleware to protect admin-only routes and features
 
 ## Building and Running
 
@@ -109,6 +118,9 @@ php artisan migrate
 
 # Rollback migrations
 php artisan migrate:rollback
+
+# Make a user an admin
+php artisan make:admin user@example.com
 ```
 
 ### Common Artisan Commands
@@ -156,6 +168,8 @@ php artisan make:controller ControllerName
 - CSRF protection enabled by default
 - SQL injection prevention through Eloquent ORM
 - Input validation using Form Request classes
+- Custom middleware for admin access protection
+- Only admin users can modify the data_access field for other users
 
 ## Key Dependencies
 
@@ -169,7 +183,7 @@ php artisan make:controller ControllerName
 - Vite (>=6.0.0) for asset building
 - Bootstrap (^5.2.3) for CSS framework
 - Axios (^1.6.4) for HTTP requests
-- @popperjs/core (^2.11.6) for Bootstrap components
+- <!-- Import failed: popperjs/core - ENOENT: no such file or directory, access 'C:\laragon\www\produk-halal-kp\popperjs\core' --> (^2.11.6) for Bootstrap components
 - Sass (^1.56.1) for CSS preprocessing
 
 ## File Locations
@@ -186,8 +200,33 @@ php artisan make:controller ControllerName
 - `resources/views/` - Blade templates
 - `resources/views/users/` - User management views
 - `resources/views/welcome.blade.php` - Default welcome page
+- `resources/views/layouts/app.blade.php` - Main layout with admin dashboard link in navbar
 
 ### Asset Files
 - `resources/sass/app.scss` - Main SCSS file
 - `resources/js/app.js` - Main JavaScript file
 - `vite.config.js` - Vite build configuration
+
+## Admin Dashboard Implementation
+
+### Components Added
+1. **AdminMiddleware** - Checks if authenticated user is an admin
+2. **AdminDashboardController** - Handles admin dashboard display
+3. **Admin Dashboard View** - Special dashboard for admin users
+4. **Protected Route** - `/admin/dashboard` with 'admin' middleware
+5. **Login Redirect Logic** - Admins redirected to dashboard after login
+6. **Navbar Dropdown Link** - Visible only to admin users in the top navbar
+7. **Data Access Management** - Admins can set 'data_access' for other users via radio buttons
+
+### How Admin Dashboard Works
+1. Admin user logs in using credentials (admin status assigned via seeder)
+2. After authentication, system checks if user is an admin
+3. If admin, redirects to `/admin/dashboard` instead of `/home`
+4. Admins can access the dashboard through the dropdown menu in the navbar
+5. Regular users cannot access the admin dashboard or see the link in the navbar
+
+### Data Access Management
+- Only admin users can see and modify the 'data_access' field for other users
+- Implemented with radio buttons for "Yes" and "No" options in create/edit forms
+- Uses proper validation to ensure the value is always updated (0 or 1)
+- The 'admin' field cannot be modified through the UI - only through seeding or artisan commands

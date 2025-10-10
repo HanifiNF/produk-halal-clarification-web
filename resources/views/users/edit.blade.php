@@ -29,6 +29,19 @@
             <label class="form-label">Password (leave blank to keep)</label>
             <input type="password" name="password" class="form-control">
         </div>
+        @if(Auth::user()->admin)
+        <div class="mb-3">
+            <label class="form-label">Data Access</label>
+            <div class="form-check">
+                <input type="radio" name="data_access" class="form-check-input" id="data_access_yes" value="1" {{ $user->data_access ? 'checked' : '' }}>
+                <label class="form-check-label" for="data_access_yes">Yes</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" name="data_access" class="form-check-input" id="data_access_no" value="0" {{ !$user->data_access ? 'checked' : '' }}>
+                <label class="form-check-label" for="data_access_no">No</label>
+            </div>
+        </div>
+        @endif
         <button class="btn btn-primary">Update</button>
     </form>
 </div>

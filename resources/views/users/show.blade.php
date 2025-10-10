@@ -9,6 +9,8 @@
             <p><strong>ID:</strong> {{ $user->id }}</p>
             <p><strong>Name:</strong> {{ $user->name }}</p>
             <p><strong>Email:</strong> {{ $user->email }}</p>
+            <p><strong>Admin:</strong> {{ $user->admin ? 'Yes' : 'No' }}</p>
+            <p><strong>Data Access:</strong> {{ $user->data_access ? 'Yes' : 'No' }}</p>
         </div>
     </div>
 
