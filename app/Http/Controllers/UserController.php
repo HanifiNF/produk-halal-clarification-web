@@ -33,6 +33,7 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
+            'phone_number' => 'nullable|string|max:20',
             'password' => 'required|string|min:6',
         ]);
 
@@ -76,6 +77,7 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
+            'phone_number' => 'nullable|string|max:20',
             'password' => 'nullable|string|min:6',
         ]);
 
