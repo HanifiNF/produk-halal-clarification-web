@@ -1,48 +1,58 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Edit User') }}
+        </h2>
+    </x-slot>
 
-@section('content')
-<div class="container">
-    <h1>Edit User</h1>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="list-disc list-inside text-red-600 dark:text-red-400">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-    @if($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <form action="{{ route('users.update', $user) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <div class="mb-3">
-            <label class="form-label">Name</label>
-            <input type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Password (leave blank to keep)</label>
-            <input type="password" name="password" class="form-control">
-        </div>
-        @if(Auth::user()->admin)
-        <div class="mb-3">
-            <label class="form-label">Data Access</label>
-            <div class="form-check">
-                <input type="radio" name="data_access" class="form-check-input" id="data_access_yes" value="1" {{ $user->data_access ? 'checked' : '' }}>
-                <label class="form-check-label" for="data_access_yes">Yes</label>
+                    <form action="{{ route('users.update', $user) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Name</label>
+                            <input type="text" name="name" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white" value="{{ old('name', $user->name) }}" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                            <input type="email" name="email" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white" value="{{ old('email', $user->email) }}" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password (leave blank to keep)</label>
+                            <input type="password" name="password" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                        </div>
+                        @if(Auth::user()->admin)
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Data Access</label>
+                            <div class="flex items-center mb-2">
+                                <input type="radio" name="data_access" id="data_access_yes" value="1" class="rounded text-indigo-600 shadow-sm" {{ $user->data_access ? 'checked' : '' }}>
+                                <label for="data_access_yes" class="ml-2 text-gray-700 dark:text-gray-300">Yes</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" name="data_access" id="data_access_no" value="0" class="rounded text-indigo-600 shadow-sm" {{ !$user->data_access ? 'checked' : '' }}>
+                                <label for="data_access_no" class="ml-2 text-gray-700 dark:text-gray-300">No</label>
+                            </div>
+                        </div>
+                        @endif
+                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
+                            Update
+                        </button>
+                    </form>
+                </div>
             </div>
-            <div class="form-check">
-                <input type="radio" name="data_access" class="form-check-input" id="data_access_no" value="0" {{ !$user->data_access ? 'checked' : '' }}>
-                <label class="form-check-label" for="data_access_no">No</label>
-            </div>
         </div>
-        @endif
-        <button class="btn btn-primary">Update</button>
-    </form>
-</div>
-@endsection
+    </div>
+</x-app-layout>

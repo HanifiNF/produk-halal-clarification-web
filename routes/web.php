@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,16 +19,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// User resource routes (CRUD) - protected by auth
-Route::middleware(['auth'])->group(function () {
-    Route::resource('users', App\Http\Controllers\UserController::class);
-});
-
-Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    // User resource routes (CRUD) - protected by auth
+    Route::resource('users', UserController::class);
+});
 
 // Admin dashboard route - protected by both auth and admin middleware
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [App\Http\Controllers\AdminDashboardController::class, 'index'])->name('admin.dashboard');
 });
+
+require __DIR__.'/auth.php';
