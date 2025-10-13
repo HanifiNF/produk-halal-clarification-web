@@ -44,4 +44,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Get the UMKMs for the user.
+     */
+    public function umkms()
+    {
+        return $this->hasMany(UMKM::class);
+    }
 }
