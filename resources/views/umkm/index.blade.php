@@ -1,84 +1,93 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('My UMKMs') }}
-        </h2>
-    </x-slot>
+    <style>
+        .blurred {
+            filter: blur(5px);
+            transition: filter 0.3s ease;
+        }
+    </style>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div class="flex justify-between items-center mb-6">
-                        <h1 class="text-2xl font-bold">My UMKMs</h1>
-                        <button id="registerUmkmBtn"
-                            class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
-                            Register New UMKM
-                        </button>
-                    </div>
+    <div id="pageContent" class="content">
+        <x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('My UMKMs') }}
+            </h2>
+        </x-slot>
 
-                    @if(session('success'))
-                        <div class="alert alert-success bg-green-100 text-green-700 p-3 rounded mb-4">
-                            {{ session('success') }}
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                        <div class="flex justify-between items-center mb-6">
+                            <h1 class="text-2xl font-bold">My UMKMs</h1>
+                            <button id="registerUmkmBtn"
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
+                                Register New UMKM
+                            </button>
                         </div>
-                    @endif
 
-                    @if($umkms->count() > 0)
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
-                                <thead class="bg-gray-50 dark:bg-gray-700">
-                                    <tr>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                            ID</th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                            UMKM Name</th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                            City</th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                            Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600">
-                                    @foreach($umkms as $umkm)
+                        @if(session('success'))
+                            <div class="alert alert-success bg-green-100 text-green-700 p-3 rounded mb-4">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if($umkms->count() > 0)
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
+                                    <thead class="bg-gray-50 dark:bg-gray-700">
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                                {{ $umkm->id }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                                {{ $umkm->nama_umkm }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                                {{ $umkm->kota }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                <a href="{{ route('umkm.show', $umkm) }}"
-                                                    class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-2">View</a>
-                                                <a href="{{ route('umkm.edit', $umkm) }}"
-                                                    class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300 mr-2">Edit</a>
-                                                <form action="{{ route('umkm.destroy', $umkm) }}" method="POST"
-                                                    style="display:inline-block;" onsubmit="return confirm('Delete UMKM?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
-                                                </form>
-                                            </td>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                                ID</th>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                                UMKM Name</th>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                                City</th>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                                Actions</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                    </thead>
+                                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600">
+                                        @foreach($umkms as $umkm)
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                                    {{ $umkm->id }}
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                                    {{ $umkm->nama_umkm }}
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                                    {{ $umkm->kota }}
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                    <a href="{{ route('umkm.show', $umkm) }}"
+                                                        class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-2">View</a>
+                                                    <a href="{{ route('umkm.edit', $umkm) }}"
+                                                        class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300 mr-2">Edit</a>
+                                                    <form action="{{ route('umkm.destroy', $umkm) }}" method="POST"
+                                                        style="display:inline-block;" onsubmit="return confirm('Delete UMKM?');">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
 
-                        <div class="mt-4">
-                            {{ $umkms->links() }}
-                        </div>
-                    @else
-                        <p class="text-gray-800 dark:text-gray-200">You haven't registered any UMKMs yet.</p>
-                    @endif
+                            <div class="mt-4">
+                                {{ $umkms->links() }}
+                            </div>
+                        @else
+                            <p class="text-gray-800 dark:text-gray-200">You haven't registered any UMKMs yet.</p>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
@@ -86,7 +95,7 @@
     
     <!-- Modal Background -->
     <div id="umkmModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
-        <div class="fixed inset-0 w-full h-full bg-black opacity-50"></div>
+        <div class="fixed inset-0 w-full h-full bg-black bg-opacity-50"></div>
         <div class="flex min-h-screen items-center justify-center px-4 py-8">
             <div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl transform transition-all sm:w-full sm:max-w-lg">
                 <div class="p-6">
@@ -167,25 +176,30 @@
         const closeModal = document.getElementById('closeModal');
         const cancelForm = document.getElementById('cancelForm');
         const umkmForm = document.getElementById('umkmForm');
+        const pageContent = document.getElementById('pageContent');
 
         // Show modal
         registerUmkmBtn.addEventListener('click', function () {
             umkmModal.classList.remove('hidden');
+            pageContent.classList.add('blurred');
         });
 
         // Close modal functions
         closeModal.addEventListener('click', function () {
             umkmModal.classList.add('hidden');
+            pageContent.classList.remove('blurred');
         });
 
         cancelForm.addEventListener('click', function () {
             umkmModal.classList.add('hidden');
+            pageContent.classList.remove('blurred');
         });
 
         // Close modal when clicking outside the form
         umkmModal.addEventListener('click', function (event) {
             if (event.target === umkmModal) {
                 umkmModal.classList.add('hidden');
+                pageContent.classList.remove('blurred');
             }
         });
 
@@ -212,6 +226,7 @@
 
                     // Close the modal
                     umkmModal.classList.add('hidden');
+                    pageContent.classList.remove('blurred');
 
                     // Optionally, refresh the page to show the new UMKM
                     location.reload();

@@ -1,25 +1,34 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+    <style>
+        .blurred {
+            filter: blur(5px);
+            transition: filter 0.3s ease;
+        }
+    </style>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+    <div id="pageContent" class="content">
+        <x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Dashboard') }}
+            </h2>
+        </x-slot>
 
-                    <div class="mt-6">
-                        <button id="registerUmkmBtn"
-                            class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
-                            Register New UMKM
-                        </button>
-                        <a href="{{ route('umkm.index') }}"
-                            class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-4">
-                            Manage My UMKMs
-                        </a>
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                        {{ __("You're logged in!") }}
+
+                        <div class="mt-6">
+                            <button id="registerUmkmBtn"
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
+                                Register New UMKM
+                            </button>
+                            <a href="{{ route('umkm.index') }}"
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-4">
+                                Manage My UMKMs
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -28,7 +37,7 @@
 
     <!-- Modal Background -->
     <div id="umkmModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
-        <div class="fixed inset-0 w-full h-full bg-black opacity-50"></div>
+        <div class="fixed inset-0 w-full h-full bg-black bg-opacity-50"></div>
         <div class="flex min-h-screen items-center justify-center px-4 py-8">
             <div
                 class="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl transform transition-all sm:w-full sm:max-w-lg">
@@ -136,25 +145,30 @@
         const closeModal = document.getElementById('closeModal');
         const cancelForm = document.getElementById('cancelForm');
         const umkmForm = document.getElementById('umkmForm');
+        const pageContent = document.getElementById('pageContent');
 
         // Show modal
         registerUmkmBtn.addEventListener('click', function () {
             umkmModal.classList.remove('hidden');
+            pageContent.classList.add('blurred');
         });
 
         // Close modal functions
         closeModal.addEventListener('click', function () {
             umkmModal.classList.add('hidden');
+            pageContent.classList.remove('blurred');
         });
 
         cancelForm.addEventListener('click', function () {
             umkmModal.classList.add('hidden');
+            pageContent.classList.remove('blurred');
         });
 
         // Close modal when clicking outside the form
         umkmModal.addEventListener('click', function (event) {
             if (event.target === umkmModal) {
                 umkmModal.classList.add('hidden');
+                pageContent.classList.remove('blurred');
             }
         });
 
@@ -181,6 +195,7 @@
 
                     // Close the modal
                     umkmModal.classList.add('hidden');
+                    pageContent.classList.remove('blurred');
 
                     // Optionally, refresh the page to show the new UMKM
                     location.reload();
