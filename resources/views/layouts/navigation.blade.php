@@ -38,6 +38,10 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
+                        <x-dropdown-link :href="route('umkm.index')">
+                            {{ __('Manage UMKMs') }}
+                        </x-dropdown-link>
+
                         @if(Auth::user()->admin)
                             <x-dropdown-link :href="route('admin.dashboard')">
                                 {{ __('Admin Dashboard') }}
@@ -88,6 +92,10 @@
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
+                </x-responsive-nav-link>
+                
+                <x-responsive-nav-link :href="route('umkm.index')">
+                    {{ __('Manage UMKMs') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->

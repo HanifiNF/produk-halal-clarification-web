@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UMKMController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,9 @@ Route::middleware('auth')->group(function () {
     
     // User resource routes (CRUD) - protected by auth
     Route::resource('users', UserController::class);
+    
+    // UMKM resource routes - protected by auth
+    Route::resource('umkm', UMKMController::class);
 });
 
 // Admin dashboard route - protected by both auth and admin middleware
