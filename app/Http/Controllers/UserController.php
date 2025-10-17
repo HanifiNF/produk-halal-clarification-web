@@ -13,6 +13,10 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->admin) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $users = User::latest()->paginate(15);
         return view('users.index', compact('users'));
     }
@@ -22,6 +26,9 @@ class UserController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->admin) {
+            abort(403, 'Unauthorized action.');
+        }
         return view('users.create');
     }
 
@@ -57,6 +64,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        if (!auth()->user()->admin && auth()->user()->id !== $user->id) {
+            abort(403, 'Unauthorized action.');
+        }
         return view('users.show', compact('user'));
     }
 
@@ -65,6 +75,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        if (!auth()->user()->admin) {
+            abort(403, 'Unauthorized action.');
+        }
         return view('users.edit', compact('user'));
     }
 

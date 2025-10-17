@@ -6,6 +6,7 @@ use App\Models\UMKM;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class UMKMController extends Controller
 {
@@ -17,7 +18,7 @@ class UMKMController extends Controller
         $umkms = Auth::user()->umkms()->latest()->paginate(10);
         return view('umkm.index', compact('umkms'));
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -73,11 +74,14 @@ class UMKMController extends Controller
     public function show(UMKM $umkm)
     {
         // Ensure the user can only view their own UMKM
-        if ($umkm->user_id !== Auth::user()->id) {
-            abort(403, 'Unauthorized access.');
-        }
+        if ($umkm->user_id == Auth::user()->id || Auth::user()->admin) {
+            return view('umkm.show', compact('umkm'));
+        } 
+
+        // Log::info('UMKM Owner ID: ' . $umkm->user_id . ', Current User ID: ' . Auth::user()->id);
+        // Log::info('Is Admin: ' . (Auth::user()->admin ? 'Yes' : 'No'));
         
-        return view('umkm.show', compact('umkm'));
+        abort(403, 'Unauthorized access.');
     }
 
     /**
@@ -86,11 +90,11 @@ class UMKMController extends Controller
     public function edit(UMKM $umkm)
     {
         // Ensure the user can only edit their own UMKM
-        if ($umkm->user_id !== Auth::user()->id) {
-            abort(403, 'Unauthorized access.');
+        if ($umkm->user_id == Auth::user()->id || Auth::user()->admin) {
+            return view('umkm.edit', compact('umkm'));
         }
         
-        return view('umkm.edit', compact('umkm'));
+        abort(403, 'Unauthorized access.');
     }
 
     /**
@@ -99,31 +103,31 @@ class UMKMController extends Controller
     public function update(Request $request, UMKM $umkm)
     {
         // Ensure the user can only update their own UMKM
-        if ($umkm->user_id !== Auth::user()->id) {
-            abort(403, 'Unauthorized access.');
+        if ($umkm->user_id == Auth::user()->id || Auth::user()->admin) {
+             $request->validate([
+                'nama_umkm' => 'required|string|max:255',
+                'email_umkm' => 'nullable|email|max:255',
+                'nomor_handphone_umkm' => 'nullable|string|max:20',
+                'alamat' => 'required|string|max:500',
+                'kota' => 'required|string|max:100',
+                'provinsi' => 'required|string|max:100',
+                'tahun_berdiri' => 'required|integer|min:1900|max:' . date('Y'),
+            ]);
+
+            $umkm->update([
+                'nama_umkm' => $request->nama_umkm,
+                'email_umkm' => $request->email_umkm,
+                'nomor_handphone_umkm' => $request->nomor_handphone_umkm,
+                'alamat' => $request->alamat,
+                'kota' => $request->kota,
+                'provinsi' => $request->provinsi,
+                'tahun_berdiri' => $request->tahun_berdiri,
+            ]);
+
+            return redirect()->route('umkm.index')->with('success', 'UMKM updated successfully.');
         }
         
-        $request->validate([
-            'nama_umkm' => 'required|string|max:255',
-            'email_umkm' => 'nullable|email|max:255',
-            'nomor_handphone_umkm' => 'nullable|string|max:20',
-            'alamat' => 'required|string|max:500',
-            'kota' => 'required|string|max:100',
-            'provinsi' => 'required|string|max:100',
-            'tahun_berdiri' => 'required|integer|min:1900|max:' . date('Y'),
-        ]);
-
-        $umkm->update([
-            'nama_umkm' => $request->nama_umkm,
-            'email_umkm' => $request->email_umkm,
-            'nomor_handphone_umkm' => $request->nomor_handphone_umkm,
-            'alamat' => $request->alamat,
-            'kota' => $request->kota,
-            'provinsi' => $request->provinsi,
-            'tahun_berdiri' => $request->tahun_berdiri,
-        ]);
-
-        return redirect()->route('umkm.index')->with('success', 'UMKM updated successfully.');
+        abort(403, 'Unauthorized access.');
     }
 
     /**
@@ -132,12 +136,26 @@ class UMKMController extends Controller
     public function destroy(UMKM $umkm)
     {
         // Ensure the user can only delete their own UMKM
-        if ($umkm->user_id !== Auth::user()->id) {
-            abort(403, 'Unauthorized access.');
+        if ($umkm->user_id == Auth::user()->id || Auth::user()->admin) {
+            $umkm->delete();
+            
+            return redirect()->route('umkm.index')->with('success', 'UMKM deleted successfully.');
         }
         
-        $umkm->delete();
+        abort(403, 'Unauthorized access.');
+    }
+    
+    /**
+     * Display a listing of all UMKMs for admin users.
+     */
+    public function listAll()
+    {
+        // Only allow admin users to access this functionality
+        if (!Auth::user()->admin) {
+            abort(403, 'Unauthorized access. Admin access required.');
+        }
         
-        return redirect()->route('umkm.index')->with('success', 'UMKM deleted successfully.');
+        $umkms = UMKM::with('user')->latest()->paginate(10);
+        return view('umkm.listall', compact('umkms'));
     }
 }

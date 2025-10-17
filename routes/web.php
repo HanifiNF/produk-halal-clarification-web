@@ -26,6 +26,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Define the admin-only list-all route before the resource routes to avoid conflicts
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/umkm/list-all', [UMKMController::class, 'listAll'])->name('umkm.listall');
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -34,7 +39,7 @@ Route::middleware('auth')->group(function () {
     // User resource routes (CRUD) - protected by auth
     Route::resource('users', UserController::class);
     
-    // UMKM resource routes - protected by auth
+    // UMKM resource routes - protected by auth (must come after specific routes to avoid conflicts)
     Route::resource('umkm', UMKMController::class);
 });
 
