@@ -18,6 +18,11 @@ class AdminUserSeeder extends Seeder
             'name' => 'King',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('nipiganteng123'),
+            'nama_umkm' => 'Admin UMKM',
+            'address' => 'Jl. Admin No.1',
+            'city' => 'Admin City',
+            'province' => 'Admin Province',
+            'establish_year' => 2020,
             'admin' => true,
             'data_access' => true,
         ]);

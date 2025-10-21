@@ -21,8 +21,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone_number',
         'admin',
         'data_access',
+        'nama_umkm',
+        'address',
+        'city',
+        'province',
+        'establish_year',
     ];
 
     /**
@@ -43,13 +49,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'establish_year' => 'integer',
     ];
-
-    /**
-     * Get the UMKMs for the user.
-     */
-    public function umkms()
-    {
-        return $this->hasMany(UMKM::class);
-    }
 }

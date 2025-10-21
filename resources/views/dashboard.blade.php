@@ -18,7 +18,7 @@
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         {{ __("You're logged in!") }}
-
+                        {{--
                         <div class="mt-6">
                             <button id="registerUmkmBtn"
                                 class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
@@ -28,7 +28,7 @@
                                 class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-4">
                                 Manage My UMKMs
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -187,35 +187,35 @@
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 }
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Show success message
-                    alert(data.message);
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Show success message
+                        alert(data.message);
 
-                    // Close the modal
-                    umkmModal.classList.add('hidden');
-                    pageContent.classList.remove('blurred');
+                        // Close the modal
+                        umkmModal.classList.add('hidden');
+                        pageContent.classList.remove('blurred');
 
-                    // Optionally, refresh the page to show the new UMKM
-                    location.reload();
-                } else {
-                    // Handle validation errors if they're returned in the response
-                    if (data.errors) {
-                        let errorMessages = '';
-                        for (let field in data.errors) {
-                            errorMessages += data.errors[field].join(', ') + '\n';
-                        }
-                        alert('Validation errors:\n' + errorMessages);
+                        // Optionally, refresh the page to show the new UMKM
+                        location.reload();
                     } else {
-                        alert('There were some errors with your submission. Please try again.');
+                        // Handle validation errors if they're returned in the response
+                        if (data.errors) {
+                            let errorMessages = '';
+                            for (let field in data.errors) {
+                                errorMessages += data.errors[field].join(', ') + '\n';
+                            }
+                            alert('Validation errors:\n' + errorMessages);
+                        } else {
+                            alert('There were some errors with your submission. Please try again.');
+                        }
                     }
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while submitting the form. Please try again.');
-            });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while submitting the form. Please try again.');
+                });
         });
     </script>
 </x-app-layout>

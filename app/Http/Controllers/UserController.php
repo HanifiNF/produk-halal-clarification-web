@@ -40,6 +40,12 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
+            'phone_number' => 'nullable|string|max:20',
+            'nama_umkm' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:500',
+            'city' => 'nullable|string|max:100',
+            'province' => 'nullable|string|max:100',
+            'establish_year' => 'nullable|integer|min:1900|max:' . date('Y'),
             'password' => 'required|string|min:6',
         ]);
 
@@ -89,6 +95,12 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
+            'phone_number' => 'nullable|string|max:20',
+            'nama_umkm' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:500',
+            'city' => 'nullable|string|max:100',
+            'province' => 'nullable|string|max:100',
+            'establish_year' => 'nullable|integer|min:1900|max:' . date('Y'),
             'password' => 'nullable|string|min:6',
         ]);
 
