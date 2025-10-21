@@ -47,6 +47,42 @@
             @endif
         </div>
 
+        <div>
+            <x-input-label for="phone_number" :value="__('Phone Number')" />
+            <x-text-input id="phone_number" name="phone_number" type="text" class="mt-1 block w-full" :value="old('phone_number', $user->phone_number)" autocomplete="phone_number" />
+            <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+        </div>
+
+        <div>
+            <x-input-label for="nama_umkm" :value="__('Nama UMKM')" />
+            <x-text-input id="nama_umkm" name="nama_umkm" type="text" class="mt-1 block w-full" :value="old('nama_umkm', $user->nama_umkm)" autocomplete="nama_umkm" />
+            <x-input-error class="mt-2" :messages="$errors->get('nama_umkm')" />
+        </div>
+
+        <div>
+            <x-input-label for="address" :value="__('Address')" />
+            <x-text-input id="address" name="address" type="text" class="mt-1 block w-full" :value="old('address', $user->address)" autocomplete="address" />
+            <x-input-error class="mt-2" :messages="$errors->get('address')" />
+        </div>
+
+        <div>
+            <x-input-label for="city" :value="__('City')" />
+            <x-text-input id="city" name="city" type="text" class="mt-1 block w-full" :value="old('city', $user->city)" autocomplete="city" />
+            <x-input-error class="mt-2" :messages="$errors->get('city')" />
+        </div>
+
+        <div>
+            <x-input-label for="province" :value="__('Province')" />
+            <x-text-input id="province" name="province" type="text" class="mt-1 block w-full" :value="old('province', $user->province)" autocomplete="province" />
+            <x-input-error class="mt-2" :messages="$errors->get('province')" />
+        </div>
+
+        <div>
+            <x-input-label for="establish_year" :value="__('Establish Year')" />
+            <x-text-input id="establish_year" name="establish_year" type="number" class="mt-1 block w-full" :value="old('establish_year', $user->establish_year)" min="1900" max="{{ date('Y') }}" autocomplete="establish_year" />
+            <x-input-error class="mt-2" :messages="$errors->get('establish_year')" />
+        </div>
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 

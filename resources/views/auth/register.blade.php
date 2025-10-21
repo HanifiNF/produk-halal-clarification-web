@@ -5,14 +5,14 @@
         <!-- Name and Email -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-                <x-input-label for="name" :value="__('Owner Name')" />
+                <x-input-label for="name" :value="__('Nama Pemilik')" />
                 <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
                     autofocus autocomplete="name" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
             <div>
-                <x-input-label for="email" :value="__('Email')" />
+                <x-input-label for="email" :value="__('UMKM Email')" />
                 <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
                     required autocomplete="username" />
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
@@ -21,7 +21,7 @@
 
         <!-- UMKM Name -->
         <div class="mt-4">
-            <x-input-label for="nama_umkm" :value="__('UMKM Name')" />
+            <x-input-label for="nama_umkm" :value="__('Nama UMKM atau Instansi')" />
             <x-text-input id="nama_umkm" class="block mt-1 w-full" type="text" name="nama_umkm"
                 :value="old('nama_umkm')" autocomplete="nama_umkm" />
             <x-input-error :messages="$errors->get('nama_umkm')" class="mt-2" />
@@ -30,14 +30,14 @@
         <!-- Phone Number and Establish Year -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <div>
-                <x-input-label for="phone_number" :value="__('Phone Number')" />
+                <x-input-label for="phone_number" :value="__('Nomor kontak(Handphone)')" />
                 <x-text-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number"
                     :value="old('phone_number')" autocomplete="phone_number" />
                 <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
             </div>
 
             <div>
-                <x-input-label for="establish_year" :value="__('Establish Year')" />
+                <x-input-label for="establish_year" :value="__('Tahun Berdiri')" />
                 <x-text-input id="establish_year" class="block mt-1 w-full" type="number" name="establish_year"
                     :value="old('establish_year')" min="1900" max="{{ date('Y') }}" autocomplete="establish_year" />
                 <x-input-error :messages="$errors->get('establish_year')" class="mt-2" />
@@ -46,7 +46,7 @@
 
         <!-- Address -->
         <div class="mt-4">
-            <x-input-label for="address" :value="__('Address')" />
+            <x-input-label for="address" :value="__('Alamat')" />
             <x-text-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')"
                 autocomplete="address" />
             <x-input-error :messages="$errors->get('address')" class="mt-2" />
@@ -55,14 +55,14 @@
         <!-- City and Province -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <div>
-                <x-input-label for="city" :value="__('City')" />
+                <x-input-label for="city" :value="__('Kota')" />
                 <x-text-input id="city" class="block mt-1 w-full" type="text" name="city" :value="old('city')"
                     autocomplete="city" />
                 <x-input-error :messages="$errors->get('city')" class="mt-2" />
             </div>
 
             <div>
-                <x-input-label for="province" :value="__('Province')" />
+                <x-input-label for="province" :value="__('Provinsi')" />
                 <x-text-input id="province" class="block mt-1 w-full" type="text" name="province"
                     :value="old('province')" autocomplete="province" />
                 <x-input-error :messages="$errors->get('province')" class="mt-2" />
