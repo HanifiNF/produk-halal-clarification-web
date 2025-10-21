@@ -23,7 +23,10 @@ class User extends Authenticatable
         'password',
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
         'phone_number',
@@ -35,6 +38,9 @@ class User extends Authenticatable
         'province',
         'establish_year',
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
