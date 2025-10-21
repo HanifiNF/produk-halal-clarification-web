@@ -1,0 +1,131 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
+class UserController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        if (!auth()->user()->admin) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $users = User::latest()->paginate(15);
+        return view('users.index', compact('users'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        if (!auth()->user()->admin) {
+            abort(403, 'Unauthorized action.');
+        }
+        return view('users.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'phone_number' => 'nullable|string|max:20',
+            'nama_umkm' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:500',
+            'city' => 'nullable|string|max:100',
+            'province' => 'nullable|string|max:100',
+            'establish_year' => 'nullable|integer|min:1900|max:' . date('Y'),
+            'password' => 'required|string|min:6',
+        ]);
+
+        $data['password'] = Hash::make($data['password']);
+        
+        // Default values for admin and data_access when creating a new user
+        $data['admin'] = false;
+        $data['data_access'] = false;
+        
+        // Only allow admin users to set data_access field
+        if (auth()->user()->admin) {
+            $data['data_access'] = $request->input('data_access') == 1;
+        }
+
+        User::create($data);
+
+        return redirect()->route('users.index')->with('success', 'User created');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(User $user)
+    {
+        if (!auth()->user()->admin && auth()->user()->id !== $user->id) {
+            abort(403, 'Unauthorized action.');
+        }
+        return view('users.show', compact('user'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(User $user)
+    {
+        if (!auth()->user()->admin) {
+            abort(403, 'Unauthorized action.');
+        }
+        return view('users.edit', compact('user'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, User $user)
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'phone_number' => 'nullable|string|max:20',
+            'nama_umkm' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:500',
+            'city' => 'nullable|string|max:100',
+            'province' => 'nullable|string|max:100',
+            'establish_year' => 'nullable|integer|min:1900|max:' . date('Y'),
+            'password' => 'nullable|string|min:6',
+        ]);
+
+        if (!empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
+        // Only allow admin users to update data_access field
+        if (auth()->user()->admin) {
+            $data['data_access'] = $request->input('data_access') == 1;
+        }
+
+        $user->update($data);
+
+        return redirect()->route('users.index')->with('success', 'User updated');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect()->route('users.index')->with('success', 'User deleted');
+    }
+}

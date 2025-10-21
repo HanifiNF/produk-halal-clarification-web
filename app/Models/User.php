@@ -21,6 +21,17 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+<<<<<<< Updated upstream
+=======
+        'phone_number',
+        'admin',
+        'data_access',
+        'nama_umkm',
+        'address',
+        'city',
+        'province',
+        'establish_year',
+>>>>>>> Stashed changes
     ];
 
     /**
@@ -41,5 +52,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'establish_year' => 'integer',
     ];
 }
