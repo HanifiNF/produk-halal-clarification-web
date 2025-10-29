@@ -69,6 +69,19 @@
             </div>
         </div>
 
+        <!-- Pembina -->
+        <div class="mt-4">
+            <x-input-label for="pembina" :value="__('Pembina')" />
+            <x-text-input id="pembina" class="block mt-1 w-full" type="text" name="pembina" :value="old('pembina')" list="pembina-options"
+                autocomplete="pembina" />
+            <datalist id="pembina-options">
+                <option value="Pembina A">Pembina A</option>
+                <option value="Pembina B">Pembina B</option>
+                <option value="Pembina C">Pembina C</option>
+            </datalist>
+            <x-input-error :messages="$errors->get('pembina')" class="mt-2" />
+        </div>
+
         <!-- Password and Confirm Password -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <div>

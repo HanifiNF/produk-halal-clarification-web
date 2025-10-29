@@ -29,6 +29,8 @@ class User extends Authenticatable
         'city',
         'province',
         'establish_year',
+        'pembina',
+        'status_pembina',
     ];
 
     /**

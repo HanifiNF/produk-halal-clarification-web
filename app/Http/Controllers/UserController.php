@@ -46,6 +46,7 @@ class UserController extends Controller
             'city' => 'nullable|string|max:100',
             'province' => 'nullable|string|max:100',
             'establish_year' => 'nullable|integer|min:1900|max:' . date('Y'),
+            'pembina' => 'nullable|string|max:255',
             'password' => 'required|string|min:6',
         ]);
 
@@ -58,6 +59,12 @@ class UserController extends Controller
         // Only allow admin users to set data_access field
         if (auth()->user()->admin) {
             $data['data_access'] = $request->input('data_access') == 1;
+        }
+
+        // Only allow admin users to set pembina and status_pembina fields
+        if (auth()->user()->admin) {
+            $data['pembina'] = $request->input('pembina');
+            $data['status_pembina'] = $request->input('status_pembina') == 1;
         }
 
         User::create($data);
@@ -101,6 +108,7 @@ class UserController extends Controller
             'city' => 'nullable|string|max:100',
             'province' => 'nullable|string|max:100',
             'establish_year' => 'nullable|integer|min:1900|max:' . date('Y'),
+            'pembina' => 'nullable|string|max:255',
             'password' => 'nullable|string|min:6',
         ]);
 
@@ -110,9 +118,11 @@ class UserController extends Controller
             unset($data['password']);
         }
 
-        // Only allow admin users to update data_access field
+        // Only allow admin users to update data_access, pembina, and status_pembina fields
         if (auth()->user()->admin) {
             $data['data_access'] = $request->input('data_access') == 1;
+            $data['pembina'] = $request->input('pembina');
+            $data['status_pembina'] = $request->input('status_pembina') == 1;
         }
 
         $user->update($data);

@@ -101,6 +101,32 @@
                                     <label for="data_access_no" class="ml-2 text-gray-700 dark:text-gray-300">No</label>
                                 </div>
                             </div>
+                            
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Pembina</label>
+                                <select name="pembina" 
+                                    class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                                    <option value="">-- Pilih Pembina --</option>
+                                    <option value="Pembina A" {{ old('pembina') == 'Pembina A' ? 'selected' : '' }}>Pembina A</option>
+                                    <option value="Pembina B" {{ old('pembina') == 'Pembina B' ? 'selected' : '' }}>Pembina B</option>
+                                    <option value="Pembina C" {{ old('pembina') == 'Pembina C' ? 'selected' : '' }}>Pembina C</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status
+                                    Pembina</label>
+                                <div class="flex items-center mb-2">
+                                    <input type="radio" name="status_pembina" id="status_pembina_yes" value="1"
+                                        class="rounded text-indigo-600 shadow-sm" {{ old('status_pembina') == '1' ? 'checked' : '' }}>
+                                    <label for="status_pembina_yes" class="ml-2 text-gray-700 dark:text-gray-300">Yes</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="radio" name="status_pembina" id="status_pembina_no" value="0"
+                                        class="rounded text-indigo-600 shadow-sm" {{ old('status_pembina') !== '1' ? 'checked' : '' }}>
+                                    <label for="status_pembina_no" class="ml-2 text-gray-700 dark:text-gray-300">No</label>
+                                </div>
+                            </div>
                         @endif
                         <button type="submit"
                             class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">

@@ -39,6 +39,7 @@ class RegisteredUserController extends Controller
             'city' => ['nullable', 'string', 'max:100'],
             'province' => ['nullable', 'string', 'max:100'],
             'establish_year' => ['nullable', 'integer', 'min:1900', 'max:'.date('Y')],
+            'pembina' => ['nullable', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -51,6 +52,7 @@ class RegisteredUserController extends Controller
             'city' => $request->city,
             'province' => $request->province,
             'establish_year' => $request->establish_year,
+            'pembina' => $request->pembina,
             'password' => Hash::make($request->password),
         ]);
 
