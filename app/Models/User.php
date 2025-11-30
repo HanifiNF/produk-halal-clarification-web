@@ -53,4 +53,12 @@ class User extends Authenticatable
         'password' => 'hashed',
         'establish_year' => 'integer',
     ];
+
+    /**
+     * Get the products for the user/UMKM.
+     */
+    public function products()
+    {
+        return $this->hasMany(\App\Models\Product::class, 'umkm_id', 'id');
+    }
 }
