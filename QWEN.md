@@ -230,3 +230,144 @@ php artisan make:controller ControllerName
 - Implemented with radio buttons for "Yes" and "No" options in create/edit forms
 - Uses proper validation to ensure the value is always updated (0 or 1)
 - The 'admin' field cannot be modified through the UI - only through seeding or artisan commands
+
+## Product Table Details
+
+### Migration
+The product table was created with migration `2025_11_30_131915_create_products_table.php` and includes the following fields:
+
+- `id`: Auto-incrementing primary key
+- `umkm_id`: Foreign key referencing the `id` in the `users` table (cascading delete)
+- `nama_produk`: String field for the product name
+- `product_image`: Nullable string field for product image path
+- `date`: Date field
+- `verification_status`: Boolean field with default value of false
+- `timestamps`: Created and updated timestamps
+
+### Model
+The `Product` model (`app/Models/Product.php`) includes:
+
+- Fillable fields: `['umkm_id', 'nama_produk', 'product_image', 'date', 'verification_status']`
+- Casts: `date` as date type and `verification_status` as boolean
+- Relationship: A product belongs to a UMKM/user via `$this->belongsTo(\App\Models\User::class, 'umkm_id', 'id')`
+
+### Relationship to User/UMKM
+- In the User model, there's a one-to-many relationship where a user can have multiple products via `$this->hasMany(\App\Models\Product::class, 'umkm_id', 'id')`
+- This connects products to UMKM users through the `umkm_id` foreign key
+- The migration adds a foreign key constraint that will delete associated products when a UMKM/user is deleted (cascading delete)
+
+### Admin Dashboard Integration
+- The admin dashboard includes a section for "Halal Products" with a "Manage Products" link
+- The dashboard view (`resources/views/admin/dashboard.blade.php`) has a placeholder for product management functionality
+
+### Related UMKM Information
+- UMKM (Usaha Mikro, Kecil, dan Menengah - Indonesian for micro, small, and medium enterprises) fields were added to the users table with migration `2025_10_21_054939_add_umkm_fields_to_users_table.php`
+- These fields include: `nama_umkm` (UMKM name), `address`, `city`, `province`, and `establish_year`
+- This allows UMKM users to have business information stored directly in the users table
+
+## Blade Template Files Documentation
+
+### Layout Files
+1. **layouts/app.blade.php**: Main application layout with header, navigation, and page content area. Uses Tailwind CSS styling and includes the navigation component.
+
+2. **layouts/navigation.blade.php**: Navigation bar with logo, dashboard link, user dropdown menu, and conditional admin dashboard link for users with admin privileges. Contains logout functionality and responsive mobile navigation.
+
+3. **layouts/guest.blade.php**: Layout for unauthenticated users (likely exists but not read in this session).
+
+### Main Pages
+4. **welcome.blade.php**: Default welcome page for the application with links to Laravel documentation, Laracasts, and Laravel News. Contains the main landing page for unauthenticated users.
+
+5. **dashboard.blade.php**: User dashboard showing a "You're logged in!" message. Now includes functionality to register new UMKMs with a modal form, buttons to manage existing UMKMs, and buttons to add and manage products. Displays a summary of the user's products. Contains JavaScript for modal interactions.
+
+6. **home.blade.php**: (File content not read in this session but likely exists).
+
+### Authentication Views
+7. **auth/login.blade.php**: Login form.
+8. **auth/register.blade.php**: Registration form.
+9. **auth/confirm-password.blade.php**: Password confirmation form.
+10. **auth/forgot-password.blade.php**: Password reset request form.
+11. **auth/reset-password.blade.php**: Password reset form.
+12. **auth/verify-email.blade.php**: Email verification page.
+13. **auth/verify.blade.php**: Account verification page.
+14. **auth/passwords/confirm.blade.php**: Password confirmation screen.
+15. **auth/passwords/email.blade.php**: Password reset email form.
+16. **auth/passwords/reset.blade.php**: Password reset form.
+
+### Admin Views
+17. **admin/dashboard.blade.php**: Admin dashboard with statistics cards for users, UMKMs, products, and reports. Contains links to manage users, UMKMs, and products. Only accessible to users with admin privileges.
+
+### User Management Views
+18. **users/index.blade.php**: Lists all users in a table with columns for ID, Name, Email, Phone Number, UMKM Name, City, Admin status, and Data Access. Includes pagination and actions for view, edit, and delete.
+
+19. **users/create.blade.php**: Form to create a new user with fields for Name, Email, Phone Number, Password, UMKM information, and additional admin-only fields for Data Access, Pembina, and Status Pembina.
+
+20. **users/edit.blade.php**: Form to edit an existing user with the same fields as the create form plus password confirmation.
+
+21. **users/show.blade.php**: Displays detailed information about a specific user.
+
+### UMKM Management Views
+22. **umkm/index.blade.php**: Lists UMKMs registered by the current user. Includes a modal form to register new UMKMs with fields for UMKM Name, Email, Phone Number, Establishment Year, Address, City, and Province.
+
+23. **umkm/show.blade.php**: Displays detailed information about a specific UMKM.
+
+24. **umkm/edit.blade.php**: Form to edit an existing UMKM.
+
+25. **umkm/listall.blade.php**: Lists all UMKMs for admin users (likely with additional management capabilities).
+
+### Product Management Views
+26. **products/index.blade.php**: Lists products registered by the current user in a table with columns for ID, Product Name, Date, Verification Status, and Actions. Includes pagination and actions for view, edit, and delete.
+
+27. **products/create.blade.php**: Form to create a new product with fields for Product Name, Product Image (optional), Date, and Verification Status.
+
+28. **products/show.blade.php**: Displays detailed information about a specific product including Product Name, Date, Verification Status, UMKM Name, and Product Image.
+
+29. **products/edit.blade.php**: Form to edit an existing product with the same fields as the create form, with the ability to update the product image.
+
+### Profile Views
+30. **profile/edit.blade.php**: User profile management page with tabs for updating profile information, updating password, and deleting account.
+
+31. **profile/partials/delete-user-form.blade.php**: Form to delete the user's account.
+
+32. **profile/partials/update-password-form.blade.php**: Form to update the user's password.
+
+33. **profile/partials/update-profile-information-form.blade.php**: Form to update the user's profile information.
+
+### Component Views
+34. **components/application-logo.blade.php**: Application logo component.
+35. **components/auth-session-status.blade.php**: Component to display authentication session status.
+36. **components/danger-button.blade.php**: Reusable danger button component.
+37. **components/dropdown-link.blade.php**: Dropdown link component.
+38. **components/dropdown.blade.php**: Dropdown component with trigger and content slots.
+39. **components/input-error.blade.php**: Error message component for form inputs.
+40. **components/input-label.blade.php**: Label component for form inputs.
+41. **components/modal.blade.php**: Modal component with overlay and content.
+42. **components/nav-link.blade.php**: Navigation link component with active state styling.
+43. **components/primary-button.blade.php**: Primary button component.
+44. **components/responsive-nav-link.blade.php**: Responsive navigation link component.
+45. **components/secondary-button.blade.php**: Secondary button component.
+46. **components/text-input.blade.php**: Text input component with styling.
+
+## Product Management System
+
+### Controllers
+- **ProductController**: Handles all product-related operations including create, read, update, and delete functionality.
+  - `index()`: Displays paginated list of products for the authenticated user
+  - `create()`: Shows the form to create a new product
+  - `store()`: Stores a new product in the database
+  - `show()`: Displays details of a specific product
+  - `edit()`: Shows the form to edit an existing product
+  - `update()`: Updates product information in the database
+  - `destroy()`: Deletes a specific product
+
+### Models
+- **Product model**: Defines the product entity with fillable fields (`umkm_id`, `nama_produk`, `product_image`, `date`, `verification_status`) and relationships to the User model.
+
+### Database
+- **Products table migration** (2025_11_30_131915_create_products_table.php): Creates the products table with the necessary fields and foreign key relationship to users table.
+
+### Routes
+- **Product routes**: Added resource routes for products in `routes/web.php` with auth middleware to protect all product operations.
+
+### Additional Features
+- **Storage link**: Created using `php artisan storage:link` to allow public access to uploaded product images.
+- **Dashboard integration**: Added buttons and product summary to the user dashboard for easy access to product management features.
