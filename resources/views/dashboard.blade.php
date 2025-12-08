@@ -42,7 +42,7 @@
                         <div class="mt-8">
                             <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">My Products</h3>
                             @php
-                                $userProducts = \App\Models\Product::where('umkm_id', Auth::id())->latest()->take(5)->get();
+                                $userProducts = \App\Models\Product::with('umkm')->where('umkm_id', Auth::id())->latest()->take(5)->get();
                             @endphp
 
                             @if($userProducts->count() > 0)
@@ -51,6 +51,7 @@
                                         <thead class="bg-gray-50 dark:bg-gray-700">
                                             <tr>
                                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Product Name</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">UMKM Name</th>
                                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Date</th>
                                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
                                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
@@ -61,6 +62,9 @@
                                                 <tr>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                                                         {{ $product->nama_produk }}
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                                        {{ $product->umkm->nama_umkm ?? $product->umkm->name ?? 'N/A' }}
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                                                         {{ $product->date }}

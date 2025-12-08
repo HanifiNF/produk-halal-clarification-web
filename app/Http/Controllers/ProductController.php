@@ -10,15 +10,27 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource for regular users.
      */
     public function index()
     {
         $products = Product::with('umkm')
             ->where('umkm_id', Auth::id())
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
 
         return view('products.index', compact('products'));
+    }
+
+    /**
+     * Display all products for admin users.
+     */
+    public function adminIndex()
+    {
+        $products = Product::with('umkm')
+            ->paginate(10);
+
+        return view('products.admin-index', compact('products'));
     }
 
     /**
@@ -39,11 +51,11 @@ class ProductController extends Controller
             'nama_produk' => 'required|string|max:255',
             'product_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'date' => 'required|date',
-            'verification_status' => 'required|boolean'
         ]);
 
         $productData = $request->all();
         $productData['umkm_id'] = Auth::id(); // Set the current user as the UMKM
+        $productData['verification_status'] = 0; // Automatically set to pending when user creates product
 
         if ($request->hasFile('product_image')) {
             $imagePath = $request->file('product_image')->store('product_images', 'public');
@@ -91,14 +103,28 @@ class ProductController extends Controller
             abort(403);
         }
 
-        $request->validate([
-            'nama_produk' => 'required|string|max:255',
-            'product_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'date' => 'required|date',
-            'verification_status' => 'required|boolean'
-        ]);
+        // Validate the request based on user role
+        if (Auth::user()->admin) {
+            $request->validate([
+                'nama_produk' => 'required|string|max:255',
+                'product_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'date' => 'required|date',
+                'verification_status' => 'required|boolean'
+            ]);
+        } else {
+            $request->validate([
+                'nama_produk' => 'required|string|max:255',
+                'product_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'date' => 'required|date',
+            ]);
+        }
 
         $productData = $request->all();
+
+        // Only allow admin to update verification status
+        if (!Auth::user()->admin) {
+            $productData['verification_status'] = $product->verification_status; // Keep the existing verification status
+        }
 
         if ($request->hasFile('product_image')) {
             $imagePath = $request->file('product_image')->store('product_images', 'public');

@@ -27,7 +27,7 @@
 
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">UMKM Name</label>
-                            <p class="text-gray-900 dark:text-gray-100">{{ $product->umkm->nama_umkm ?? 'N/A' }}</p>
+                            <p class="text-gray-900 dark:text-gray-100">{{ $product->umkm->nama_umkm ?? $product->umkm->name ?? 'N/A' }}</p>
                         </div>
 
                         <div class="mb-4 md:col-span-2">

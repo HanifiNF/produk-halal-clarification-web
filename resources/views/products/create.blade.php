@@ -24,40 +24,28 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="mb-4">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Product Name</label>
-                                <input type="text" name="nama_produk" 
+                                <input type="text" name="nama_produk"
                                     class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                     value="{{ old('nama_produk') }}" required>
                             </div>
-                            
+
                             <div class="mb-4">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Product Image</label>
                                 <input type="file" name="product_image"
                                     class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white">
                                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Optional: Upload product image (max 2MB)</p>
                             </div>
-                            
+
                             <div class="mb-4">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Date</label>
                                 <input type="date" name="date"
                                     class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                     value="{{ old('date') }}" required>
                             </div>
-                            
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Verification Status</label>
-                                <div class="flex items-center mb-2">
-                                    <input type="radio" name="verification_status" id="verification_status_approved" value="1"
-                                        class="rounded text-indigo-600 shadow-sm" {{ old('verification_status') == '1' ? 'checked' : '' }}>
-                                    <label for="verification_status_approved" class="ml-2 text-gray-700 dark:text-gray-300">Approved</label>
-                                </div>
-                                <div class="flex items-center">
-                                    <input type="radio" name="verification_status" id="verification_status_pending" value="0"
-                                        class="rounded text-indigo-600 shadow-sm" {{ old('verification_status') == '0' || old('verification_status') === null ? 'checked' : '' }}>
-                                    <label for="verification_status_pending" class="ml-2 text-gray-700 dark:text-gray-300">Pending</label>
-                                </div>
-                            </div>
+
+                            <!-- Verification status is automatically set to pending (0) when created by users -->
                         </div>
-                        
+
                         <button type="submit"
                             class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
                             Create Product

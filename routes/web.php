@@ -30,6 +30,7 @@ Route::get('/dashboard', function () {
 // Define the admin-only list-all route before the resource routes to avoid conflicts
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/umkm/list-all', [UMKMController::class, 'listAll'])->name('umkm.listall');
+    Route::get('/admin/products', [ProductController::class, 'adminIndex'])->name('admin.products.index');
 });
 
 Route::middleware('auth')->group(function () {

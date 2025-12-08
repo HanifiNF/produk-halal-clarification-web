@@ -323,40 +323,43 @@ The `Product` model (`app/Models/Product.php`) includes:
 
 29. **products/edit.blade.php**: Form to edit an existing product with the same fields as the create form, with the ability to update the product image.
 
+30. **products/admin-index.blade.php**: Lists all products from all users in a table with columns for ID, Product Name, UMKM Name, Date, Verification Status, and Actions. Includes pagination and actions for view, edit, and delete.
+
 ### Profile Views
-30. **profile/edit.blade.php**: User profile management page with tabs for updating profile information, updating password, and deleting account.
+31. **profile/edit.blade.php**: User profile management page with tabs for updating profile information, updating password, and deleting account.
 
-31. **profile/partials/delete-user-form.blade.php**: Form to delete the user's account.
+32. **profile/partials/delete-user-form.blade.php**: Form to delete the user's account.
 
-32. **profile/partials/update-password-form.blade.php**: Form to update the user's password.
+33. **profile/partials/update-password-form.blade.php**: Form to update the user's password.
 
-33. **profile/partials/update-profile-information-form.blade.php**: Form to update the user's profile information.
+34. **profile/partials/update-profile-information-form.blade.php**: Form to update the user's profile information.
 
 ### Component Views
-34. **components/application-logo.blade.php**: Application logo component.
-35. **components/auth-session-status.blade.php**: Component to display authentication session status.
-36. **components/danger-button.blade.php**: Reusable danger button component.
-37. **components/dropdown-link.blade.php**: Dropdown link component.
-38. **components/dropdown.blade.php**: Dropdown component with trigger and content slots.
-39. **components/input-error.blade.php**: Error message component for form inputs.
-40. **components/input-label.blade.php**: Label component for form inputs.
-41. **components/modal.blade.php**: Modal component with overlay and content.
-42. **components/nav-link.blade.php**: Navigation link component with active state styling.
-43. **components/primary-button.blade.php**: Primary button component.
-44. **components/responsive-nav-link.blade.php**: Responsive navigation link component.
-45. **components/secondary-button.blade.php**: Secondary button component.
-46. **components/text-input.blade.php**: Text input component with styling.
+35. **components/application-logo.blade.php**: Application logo component.
+36. **components/auth-session-status.blade.php**: Component to display authentication session status.
+37. **components/danger-button.blade.php**: Reusable danger button component.
+38. **components/dropdown-link.blade.php**: Dropdown link component.
+39. **components/dropdown.blade.php**: Dropdown component with trigger and content slots.
+40. **components/input-error.blade.php**: Error message component for form inputs.
+41. **components/input-label.blade.php**: Label component for form inputs.
+42. **components/modal.blade.php**: Modal component with overlay and content.
+43. **components/nav-link.blade.php**: Navigation link component with active state styling.
+44. **components/primary-button.blade.php**: Primary button component.
+45. **components/responsive-nav-link.blade.php**: Responsive navigation link component.
+46. **components/secondary-button.blade.php**: Secondary button component.
+47. **components/text-input.blade.php**: Text input component with styling.
 
 ## Product Management System
 
 ### Controllers
 - **ProductController**: Handles all product-related operations including create, read, update, and delete functionality.
-  - `index()`: Displays paginated list of products for the authenticated user
+  - `index()`: Displays paginated list of products for the authenticated user with eager loading of UMKM relationship, ordered by creation date (most recent first)
+  - `adminIndex()`: Displays paginated list of all products for admin users with eager loading of UMKM relationship
   - `create()`: Shows the form to create a new product
-  - `store()`: Stores a new product in the database
+  - `store()`: Stores a new product in the database with verification_status automatically set to 0 (pending)
   - `show()`: Displays details of a specific product
   - `edit()`: Shows the form to edit an existing product
-  - `update()`: Updates product information in the database
+  - `update()`: Updates product information in the database - verification status can only be changed by admin users
   - `destroy()`: Deletes a specific product
 
 ### Models
@@ -367,7 +370,17 @@ The `Product` model (`app/Models/Product.php`) includes:
 
 ### Routes
 - **Product routes**: Added resource routes for products in `routes/web.php` with auth middleware to protect all product operations.
+- **Admin product routes**: Added `/admin/products` route accessible only to admin users to view all products.
 
 ### Additional Features
 - **Storage link**: Created using `php artisan storage:link` to allow public access to uploaded product images.
 - **Dashboard integration**: Added buttons and product summary to the user dashboard for easy access to product management features.
+- **Role-based verification**: When users create products, the verification status is automatically set to pending (0). Only admin users can change the verification status through the edit form. Regular users can edit their products but cannot change the verification status.
+- **UMKM name fallback**: When the `nama_umkm` field is not set, the system falls back to using the user's name, showing "N/A" if both are unavailable.
+
+### User Interface Changes
+- **Product creation**: The product creation form no longer includes an option to select verification status. All new products are automatically set to "pending" status.
+- **Product editing**: Regular users see their current verification status displayed but cannot change it. Admin users can change the verification status using radio buttons.
+- **Admin product management**: Added separate admin product view (`products.admin-index.blade.php`) that displays all products from all users, with a link from the admin dashboard.
+- **Dashboard product display**: The user dashboard now includes a "My Products" section with columns for Product Name, UMKM Name, Date, Status, and Actions.
+- **Product views**: Updated all product views (index, show, admin-index) to properly display the UMKM name with fallbacks.
