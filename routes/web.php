@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UMKMController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PembinaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +47,9 @@ Route::middleware('auth')->group(function () {
 
     // Product resource routes - protected by auth
     Route::resource('products', ProductController::class);
+
+    // Pembina routes - for pembina to see their binaan
+    Route::get('/pembina/binaan', [PembinaController::class, 'index'])->name('pembina.binaan');
 });
 
 // Admin dashboard route - protected by both auth and admin middleware

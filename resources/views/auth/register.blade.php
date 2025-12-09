@@ -72,13 +72,14 @@
         <!-- Pembina -->
         <div class="mt-4">
             <x-input-label for="pembina" :value="__('Pembina')" />
-            <x-text-input id="pembina" class="block mt-1 w-full" type="text" name="pembina" :value="old('pembina')" list="pembina-options"
-                autocomplete="pembina" />
-            <datalist id="pembina-options">
-                <option value="Pembina A">Pembina A</option>
-                <option value="Pembina B">Pembina B</option>
-                <option value="Pembina C">Pembina C</option>
-            </datalist>
+            <select id="pembina" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" name="pembina" autocomplete="pembina">
+                <option value="">-- Pilih Pembina --</option>
+                @foreach($pembinaList as $pembina)
+                    <option value="{{ $pembina->name }}" {{ old('pembina') == $pembina->name ? 'selected' : '' }}>
+                        {{ $pembina->name }} ({{ $pembina->email }})
+                    </option>
+                @endforeach
+            </select>
             <x-input-error :messages="$errors->get('pembina')" class="mt-2" />
         </div>
 

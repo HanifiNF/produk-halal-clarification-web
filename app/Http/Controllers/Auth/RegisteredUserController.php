@@ -20,7 +20,10 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        // Dapatkan daftar pembina (user dengan status_pembina = 1)
+        $pembinaList = \App\Models\User::where('status_pembina', true)->get();
+
+        return view('auth.register', compact('pembinaList'));
     }
 
     /**
@@ -39,7 +42,17 @@ class RegisteredUserController extends Controller
             'city' => ['nullable', 'string', 'max:100'],
             'province' => ['nullable', 'string', 'max:100'],
             'establish_year' => ['nullable', 'integer', 'min:1900', 'max:'.date('Y')],
-            'pembina' => ['nullable', 'string', 'max:255'],
+            'pembina' => ['nullable', 'string', function ($attribute, $value, $fail) {
+                if (!empty($value)) {
+                    $pembinaExists = User::where('name', $value)
+                        ->where('status_pembina', true)
+                        ->exists();
+
+                    if (!$pembinaExists) {
+                        $fail('The selected pembina is not valid or does not have pembina status.');
+                    }
+                }
+            }],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 

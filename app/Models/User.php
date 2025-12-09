@@ -61,4 +61,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(\App\Models\Product::class, 'umkm_id', 'id');
     }
+
+    /**
+     * Get the users that this user is a pembina for (using name as foreign key).
+     */
+    public function binaan()
+    {
+        return $this->hasMany(\App\Models\User::class, 'pembina', 'name');
+    }
+
+    /**
+     * Get the pembina for this user (using name as foreign key).
+     */
+    public function pembinaUser()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'pembina', 'name');
+    }
 }

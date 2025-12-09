@@ -45,6 +45,12 @@
                             {{ __('Manage UMKMs') }}
                         </x-dropdown-link> --}}
 
+                        @if(Auth::user()->status_pembina)
+                            <x-dropdown-link :href="route('pembina.binaan')">
+                                {{ __('Daftar Binaan') }}
+                            </x-dropdown-link>
+                        @endif
+
                         @if(Auth::user()->admin)
                             <x-dropdown-link :href="route('admin.dashboard')">
                                 {{ __('Admin Dashboard') }}
