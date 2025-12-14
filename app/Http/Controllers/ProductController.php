@@ -12,12 +12,27 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource for regular users.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('umkm')
-            ->where('umkm_id', Auth::id())
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        $query = Product::with('umkm');
+
+        // Check if user_id parameter is provided (for pembina to view binaan products)
+        if ($request->has('user_id')) {
+            $userId = $request->user_id;
+
+            // Verify that the authenticated user is pembina for the requested user
+            $targetUser = User::find($userId);
+            if (!$targetUser || $targetUser->pembina !== Auth::user()->name) {
+                abort(403, 'Unauthorized access to this user\'s products.');
+            }
+
+            $query->where('umkm_id', $userId);
+        } else {
+            // Regular users can only see their own products
+            $query->where('umkm_id', Auth::id());
+        }
+
+        $products = $query->orderBy('created_at', 'desc')->paginate(10);
 
         return view('products.index', compact('products'));
     }

@@ -143,10 +143,8 @@
                                                         {{ $user->city ?? 'N/A' }}
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                                        <a href="{{ route('users.show', $user) }}"
-                                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-2">View</a>
-                                                        <a href="{{ route('users.edit', $user) }}"
-                                                            class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300">Edit</a>
+                                                        <a href="{{ route('products.index', ['user_id' => $user->id]) }}"
+                                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">View Products</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
