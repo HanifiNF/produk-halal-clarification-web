@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             'establish_year' => 2020,
             'admin' => false,
             'data_access' => false,
+            'pembina_id' => null,
+            'status_pembina' => false,
         ]);
 
         User::create([
@@ -38,8 +40,12 @@ class DatabaseSeeder extends Seeder
             'establish_year' => 2018,
             'admin' => false,
             'data_access' => false,
+            'pembina_id' => null,
+            'status_pembina' => false,
         ]);
         
         $this->call(AdminUserSeeder::class);
+        $this->call(DataAccessUserSeeder::class);
+        $this->call(PembinaUserSeeder::class);
     }
 }

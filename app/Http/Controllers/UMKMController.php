@@ -73,14 +73,12 @@ class UMKMController extends Controller
      */
     public function show(UMKM $umkm)
     {
+        $currentUser = Auth::user();
         // Ensure the user can only view their own UMKM
-        if ($umkm->user_id == Auth::user()->id || Auth::user()->admin) {
+        if ($umkm->user_id == Auth::user()->id || $currentUser->admin || $currentUser->data_access) {
             return view('umkm.show', compact('umkm'));
-        } 
+        }
 
-        // Log::info('UMKM Owner ID: ' . $umkm->user_id . ', Current User ID: ' . Auth::user()->id);
-        // Log::info('Is Admin: ' . (Auth::user()->admin ? 'Yes' : 'No'));
-        
         abort(403, 'Unauthorized access.');
     }
 
@@ -89,11 +87,11 @@ class UMKMController extends Controller
      */
     public function edit(UMKM $umkm)
     {
-        // Ensure the user can only edit their own UMKM
+        // Only allow the owner or admin to edit - data access users can only view
         if ($umkm->user_id == Auth::user()->id || Auth::user()->admin) {
             return view('umkm.edit', compact('umkm'));
         }
-        
+
         abort(403, 'Unauthorized access.');
     }
 
@@ -102,7 +100,7 @@ class UMKMController extends Controller
      */
     public function update(Request $request, UMKM $umkm)
     {
-        // Ensure the user can only update their own UMKM
+        // Only allow the owner or admin to update - data access users can only view
         if ($umkm->user_id == Auth::user()->id || Auth::user()->admin) {
              $request->validate([
                 'nama_umkm' => 'required|string|max:255',
@@ -126,7 +124,7 @@ class UMKMController extends Controller
 
             return redirect()->route('umkm.index')->with('success', 'UMKM updated successfully.');
         }
-        
+
         abort(403, 'Unauthorized access.');
     }
 
@@ -135,13 +133,13 @@ class UMKMController extends Controller
      */
     public function destroy(UMKM $umkm)
     {
-        // Ensure the user can only delete their own UMKM
+        // Only allow the owner or admin to delete - data access users can only view
         if ($umkm->user_id == Auth::user()->id || Auth::user()->admin) {
             $umkm->delete();
-            
+
             return redirect()->route('umkm.index')->with('success', 'UMKM deleted successfully.');
         }
-        
+
         abort(403, 'Unauthorized access.');
     }
     
@@ -150,11 +148,12 @@ class UMKMController extends Controller
      */
     public function listAll()
     {
-        // Only allow admin users to access this functionality
-        if (!Auth::user()->admin) {
-            abort(403, 'Unauthorized access. Admin access required.');
+        $currentUser = Auth::user();
+        // Allow admin and data access users to view all UMKMs
+        if (!$currentUser->admin && !$currentUser->data_access) {
+            abort(403, 'Unauthorized access. Admin or data access required.');
         }
-        
+
         $umkms = UMKM::with('user')->latest()->paginate(10);
         return view('umkm.listall', compact('umkms'));
     }

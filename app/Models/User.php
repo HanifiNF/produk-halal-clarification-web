@@ -29,7 +29,7 @@ class User extends Authenticatable
         'city',
         'province',
         'establish_year',
-        'pembina',
+        'pembina_id',
         'status_pembina',
     ];
 
@@ -63,18 +63,18 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the users that this user is a pembina for (using name as foreign key).
+     * Get the users that this user is a pembina for (using pembina_id foreign key).
      */
     public function binaan()
     {
-        return $this->hasMany(\App\Models\User::class, 'pembina', 'name');
+        return $this->hasMany(\App\Models\User::class, 'pembina_id', 'id');
     }
 
     /**
-     * Get the pembina for this user (using name as foreign key).
+     * Get the pembina for this user (using pembina_id foreign key).
      */
     public function pembinaUser()
     {
-        return $this->belongsTo(\App\Models\User::class, 'pembina', 'name');
+        return $this->belongsTo(\App\Models\User::class, 'pembina_id', 'id');
     }
 }

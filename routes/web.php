@@ -34,6 +34,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/products', [ProductController::class, 'adminIndex'])->name('admin.products.index');
 });
 
+// Define routes for data access users (read-only access to all data)
+Route::middleware(['auth', 'data.access'])->group(function () {
+    Route::get('/data-access/users', [UserController::class, 'index'])->name('data.access.users.index');
+    Route::get('/data-access/umkm', [UMKMController::class, 'listAll'])->name('data.access.umkm.index');
+    Route::get('/data-access/products', [ProductController::class, 'adminIndex'])->name('data.access.products.index');
+    Route::get('/data-access/dashboard', [App\Http\Controllers\DataAccessDashboardController::class, 'index'])->name('data.access.dashboard');
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -13,7 +13,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (!auth()->user()->admin) {
+        $currentUser = auth()->user();
+        if (!$currentUser->admin && !$currentUser->data_access) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -46,24 +47,24 @@ class UserController extends Controller
             'city' => 'nullable|string|max:100',
             'province' => 'nullable|string|max:100',
             'establish_year' => 'nullable|integer|min:1900|max:' . date('Y'),
-            'pembina' => 'nullable|string|max:255',
+            'pembina_id' => 'nullable|exists:users,id',
             'password' => 'required|string|min:6',
         ]);
 
         $data['password'] = Hash::make($data['password']);
-        
+
         // Default values for admin and data_access when creating a new user
         $data['admin'] = false;
         $data['data_access'] = false;
-        
+
         // Only allow admin users to set data_access field
         if (auth()->user()->admin) {
             $data['data_access'] = $request->input('data_access') == 1;
         }
 
-        // Only allow admin users to set pembina and status_pembina fields
+        // Only allow admin users to set pembina_id and status_pembina fields
         if (auth()->user()->admin) {
-            $data['pembina'] = $request->input('pembina');
+            $data['pembina_id'] = $request->input('pembina_id');
             $data['status_pembina'] = $request->input('status_pembina') == 1;
         }
 
@@ -77,7 +78,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        if (!auth()->user()->admin && auth()->user()->id !== $user->id) {
+        $currentUser = auth()->user();
+        if (!$currentUser->admin && !$currentUser->data_access && $currentUser->id !== $user->id) {
             abort(403, 'Unauthorized action.');
         }
         return view('users.show', compact('user'));
@@ -108,7 +110,7 @@ class UserController extends Controller
             'city' => 'nullable|string|max:100',
             'province' => 'nullable|string|max:100',
             'establish_year' => 'nullable|integer|min:1900|max:' . date('Y'),
-            'pembina' => 'nullable|string|max:255',
+            'pembina_id' => 'nullable|exists:users,id',
             'password' => 'nullable|string|min:6',
         ]);
 
@@ -118,10 +120,10 @@ class UserController extends Controller
             unset($data['password']);
         }
 
-        // Only allow admin users to update data_access, pembina, and status_pembina fields
+        // Only allow admin users to update data_access, pembina_id, and status_pembina fields
         if (auth()->user()->admin) {
             $data['data_access'] = $request->input('data_access') == 1;
-            $data['pembina'] = $request->input('pembina');
+            $data['pembina_id'] = $request->input('pembina_id');
             $data['status_pembina'] = $request->input('status_pembina') == 1;
         }
 
@@ -135,6 +137,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if (!auth()->user()->admin) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $user->delete();
         return redirect()->route('users.index')->with('success', 'User deleted');
     }

@@ -69,15 +69,17 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                 <a href="{{ route('umkm.show', $umkm) }}"
                                                     class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-2">View</a>
-                                                <a href="{{ route('umkm.edit', $umkm) }}"
-                                                    class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300 mr-2">Edit</a>
-                                                <form action="{{ route('umkm.destroy', $umkm) }}" method="POST"
-                                                    style="display:inline-block;" onsubmit="return confirm('Delete UMKM?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
-                                                </form>
+                                                @if(auth()->user()->admin)
+                                                    <a href="{{ route('umkm.edit', $umkm) }}"
+                                                        class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300 mr-2">Edit</a>
+                                                    <form action="{{ route('umkm.destroy', $umkm) }}" method="POST"
+                                                        style="display:inline-block;" onsubmit="return confirm('Delete UMKM?');">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                                                    </form>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

@@ -84,8 +84,10 @@
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
                                                         <a href="{{ route('products.show', $product) }}"
                                                             class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-2">View</a>
-                                                        <a href="{{ route('products.edit', $product) }}"
-                                                            class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300">Edit</a>
+                                                        @if(auth()->user()->admin || $product->umkm_id == auth()->id())
+                                                            <a href="{{ route('products.edit', $product) }}"
+                                                                class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300">Edit</a>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -112,7 +114,7 @@
                         <div class="mt-8">
                             <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">My Binaan</h3>
                             @php
-                                $binaan = \App\Models\User::where('pembina', Auth::user()->name)->latest()->take(5)->get();
+                                $binaan = \App\Models\User::where('pembina_id', Auth::id())->latest()->take(5)->get();
                             @endphp
 
                             @if($binaan->count() > 0)

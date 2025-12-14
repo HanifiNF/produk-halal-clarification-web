@@ -22,7 +22,7 @@ class PembinaController extends Controller
             abort(403, 'Unauthorized access. Pembina access required.');
         }
 
-        $binaan = User::where('pembina', $user->name)
+        $binaan = User::where('pembina_id', $user->id)
             ->paginate(10);
 
         return view('pembina.binaan', compact('binaan'));

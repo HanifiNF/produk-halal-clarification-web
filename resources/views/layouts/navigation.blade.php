@@ -57,6 +57,12 @@
                             </x-dropdown-link>
                         @endif
 
+                        @if(Auth::user()->data_access && !Auth::user()->admin)
+                            <x-dropdown-link :href="route('data.access.dashboard')">
+                                {{ __('Data Access Dashboard') }}
+                            </x-dropdown-link>
+                        @endif
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

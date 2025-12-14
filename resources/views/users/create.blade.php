@@ -104,12 +104,14 @@
                             
                             <div class="mb-4">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Pembina</label>
-                                <select name="pembina" 
+                                <select name="pembina_id"
                                     class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white">
                                     <option value="">-- Pilih Pembina --</option>
-                                    <option value="Pembina A" {{ old('pembina') == 'Pembina A' ? 'selected' : '' }}>Pembina A</option>
-                                    <option value="Pembina B" {{ old('pembina') == 'Pembina B' ? 'selected' : '' }}>Pembina B</option>
-                                    <option value="Pembina C" {{ old('pembina') == 'Pembina C' ? 'selected' : '' }}>Pembina C</option>
+                                    @foreach(\App\Models\User::where('status_pembina', true)->get() as $pembina)
+                                        <option value="{{ $pembina->id }}" {{ old('pembina_id') == $pembina->id ? 'selected' : '' }}>
+                                            {{ $pembina->name }} ({{ $pembina->email }})
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                             

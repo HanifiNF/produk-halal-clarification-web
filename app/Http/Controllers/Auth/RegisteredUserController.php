@@ -42,9 +42,9 @@ class RegisteredUserController extends Controller
             'city' => ['nullable', 'string', 'max:100'],
             'province' => ['nullable', 'string', 'max:100'],
             'establish_year' => ['nullable', 'integer', 'min:1900', 'max:'.date('Y')],
-            'pembina' => ['nullable', 'string', function ($attribute, $value, $fail) {
+            'pembina_id' => ['nullable', 'exists:users,id', function ($attribute, $value, $fail) {
                 if (!empty($value)) {
-                    $pembinaExists = User::where('name', $value)
+                    $pembinaExists = User::where('id', $value)
                         ->where('status_pembina', true)
                         ->exists();
 
@@ -65,7 +65,7 @@ class RegisteredUserController extends Controller
             'city' => $request->city,
             'province' => $request->province,
             'establish_year' => $request->establish_year,
-            'pembina' => $request->pembina,
+            'pembina_id' => $request->pembina_id,
             'password' => Hash::make($request->password),
         ]);
 
