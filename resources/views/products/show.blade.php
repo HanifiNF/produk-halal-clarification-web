@@ -11,7 +11,8 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Product Name</label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Product
+                                Name</label>
                             <p class="text-gray-900 dark:text-gray-100">{{ $product->nama_produk }}</p>
                         </div>
 
@@ -21,19 +22,27 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Verification Status</label>
-                            <p class="text-gray-900 dark:text-gray-100">{{ $product->verification_status ? 'Approved' : 'Pending' }}</p>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Verification
+                                Status</label>
+                            <p class="text-gray-900 dark:text-gray-100">
+                                {{ $product->verification_status ? 'Perlu Sertifikasi' : 'Tidak Perlu Sertifikasi' }}
+                            </p>
+
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">UMKM Name</label>
-                            <p class="text-gray-900 dark:text-gray-100">{{ $product->umkm->nama_umkm ?? $product->umkm->name ?? 'N/A' }}</p>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">UMKM
+                                Name</label>
+                            <p class="text-gray-900 dark:text-gray-100">
+                                {{ $product->umkm->nama_umkm ?? $product->umkm->name ?? 'N/A' }}</p>
                         </div>
 
                         <div class="mb-4 md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Product Image</label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Product
+                                Image</label>
                             @if($product->product_image)
-                                <img src="{{ asset('storage/' . $product->product_image) }}" alt="{{ $product->nama_produk }}" class="w-32 h-32 object-cover rounded-md">
+                                <img src="{{ asset('storage/' . $product->product_image) }}"
+                                    alt="{{ $product->nama_produk }}" class="w-32 h-32 object-cover rounded-md">
                             @else
                                 <p class="text-gray-900 dark:text-gray-100">No image uploaded</p>
                             @endif

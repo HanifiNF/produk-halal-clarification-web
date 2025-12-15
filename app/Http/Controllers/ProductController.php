@@ -78,18 +78,42 @@ class ProductController extends Controller
         ]);
 
         $productData = $request->all();
-        $productData['umkm_id'] = Auth::id(); // Set the current user as the UMKM
-        $productData['verification_status'] = 0; // Automatically set to pending when user creates product
+        $productData['umkm_id'] = Auth::id();
 
+        // Handle image upload
         if ($request->hasFile('product_image')) {
             $imagePath = $request->file('product_image')->store('product_images', 'public');
             $productData['product_image'] = $imagePath;
+
+            // 🔥 CALL ML API
+            try {
+                $client = new \GuzzleHttp\Client();
+                $response = $client->request('POST', 'http://127.0.0.1:8000/predict', [
+                    'multipart' => [
+                        [
+                            'name'     => 'file',
+                            'contents' => fopen(storage_path('app/public/' . $imagePath), 'r'),
+                            'filename' => basename($imagePath)
+                        ]
+                    ]
+                ]);
+
+                $result = json_decode($response->getBody(), true);
+                $productData['verification_status'] = ($result['status_sertifikasi'] === 'PerluSertifikasi') ? 1 : 0;
+            } catch (\Exception $e) {
+                // fallback jika ML API gagal
+                $productData['verification_status'] = 0;
+            }
+        } else {
+            // jika tidak ada gambar, default 0
+            $productData['verification_status'] = 0;
         }
 
         Product::create($productData);
 
         return redirect()->route('dashboard')->with('success', 'Product created successfully.');
     }
+
 
     /**
      * Display the specified resource.
@@ -124,12 +148,13 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $currentUser = Auth::user();
-        // Only admin users can update products, data access users can only view
+
+        // Authorization
         if ($product->umkm_id !== Auth::id() && !$currentUser->admin) {
             abort(403);
         }
 
-        // Validate the request based on user role
+        // Validation
         if ($currentUser->admin) {
             $request->validate([
                 'nama_produk' => 'required|string|max:255',
@@ -147,20 +172,40 @@ class ProductController extends Controller
 
         $productData = $request->all();
 
-        // Only allow admin to update verification status
-        if (!$currentUser->admin) {
-            $productData['verification_status'] = $product->verification_status; // Keep the existing verification status
-        }
-
+        // Handle image update
         if ($request->hasFile('product_image')) {
             $imagePath = $request->file('product_image')->store('product_images', 'public');
             $productData['product_image'] = $imagePath;
+
+            // 🔥 CALL ML API
+            try {
+                $client = new \GuzzleHttp\Client();
+                $response = $client->request('POST', 'http://127.0.0.1:8000/predict', [
+                    'multipart' => [
+                        [
+                            'name'     => 'file',
+                            'contents' => fopen(storage_path('app/public/' . $imagePath), 'r'),
+                            'filename' => basename($imagePath)
+                        ]
+                    ]
+                ]);
+
+                $result = json_decode($response->getBody(), true);
+                $productData['verification_status'] = ($result['status_sertifikasi'] === 'PerluSertifikasi') ? 1 : 0;
+            } catch (\Exception $e) {
+                // fallback jika ML API gagal
+                $productData['verification_status'] = $product->verification_status;
+            }
+        } else {
+            // jika tidak ada gambar baru, jangan ubah verification_status
+            $productData['verification_status'] = $product->verification_status;
         }
 
         $product->update($productData);
 
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.
