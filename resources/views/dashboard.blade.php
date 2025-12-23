@@ -8,16 +8,20 @@
 
     <div id="pageContent" class="content">
         <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-semibold text-xl text-gray-600 dark:text-gray-100 leading-tight">
                 {{ __('Dashboard') }}
             </h2>
         </x-slot>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
-                        {{ __("You're logged in!") }}
+                <div class="bg-white dark:bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900 dark:text-gray-700">
+                        <!-- Carousel Placeholder -->
+                        <div class="relative bg-red-500 h-100px flex items-center justify-center my-6">
+                            <p class="text-white text-xl font-bold">CAROUSEL PLACEHOLDER</p>
+                            <!-- Nanti carousel sebenarnya akan ditambahkan di sini -->
+                        </div>
 
                         <div class="mt-6">
                             <button id="registerUmkmBtn"
@@ -47,67 +51,47 @@
 
                         <!-- Display User's Products -->
                         <div class="mt-8">
-                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">My Products</h3>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-700 mb-4">My Products</h3>
                             @php
                                 $userProducts = \App\Models\Product::with('umkm')->where('umkm_id', Auth::id())->latest()->take(5)->get();
                             @endphp
 
                             @if($userProducts->count() > 0)
-                                <div class="overflow-x-auto">
-                                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
-                                        <thead class="bg-gray-50 dark:bg-gray-700">
-                                            <tr>
-                                                <th
-                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                                    Product Name</th>
-                                                <th
-                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                                    UMKM Name</th>
-                                                <th
-                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                                    Date</th>
-                                                <th
-                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                                    Status</th>
-                                                <th
-                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                                    Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody
-                                            class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600">
-                                            @foreach($userProducts as $product)
-                                                <tr>
-                                                    <td
-                                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                    @foreach($userProducts as $product)
+                                        <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-sm overflow-hidden">
+                                            <!-- Product Image -->
+                                            <a href="{{ route('products.show', $product) }}">
+                                                @if($product->product_image)
+                                                    <img class="rounded-t-lg w-full h-32 object-cover" src="{{ asset('storage/' . $product->product_image) }}" alt="{{ $product->nama_produk }}" />
+                                                @else
+                                                    <div class="w-full h-32 bg-gray-200 dark:bg-gray-600 flex items-center justify-center rounded-t-lg">
+                                                        <span class="text-gray-500 dark:text-gray-400 text-sm">No Image</span>
+                                                    </div>
+                                                @endif
+                                            </a>
+                                            <div class="p-4 text-center">
+                                                <a href="{{ route('products.show', $product) }}">
+                                                    <h5 class="mt-2 mb-2 text-lg font-semibold tracking-tight text-gray-800 dark:text-gray-200 truncate">
                                                         {{ $product->nama_produk }}
-                                                    </td>
-                                                    <td
-                                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                                        {{ $product->umkm->nama_umkm ?? $product->umkm->name ?? 'N/A' }}
-                                                    </td>
-                                                    <td
-                                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                                        {{ $product->date }}
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                                        <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $product->verification_status ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100' }}">
-                                                            {{ $product->verification_status ? 'Perlu Sertifikasi' : 'Tidak Perlu Sertifikasi' }}
-                                                        </span>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                                        <a href="{{ route('products.show', $product) }}"
-                                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-2">View</a>
-                                                        @if(auth()->user()->admin || $product->umkm_id == auth()->id())
-                                                            <a href="{{ route('products.edit', $product) }}"
-                                                                class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300">Edit</a>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                                    </h5>
+                                                </a>
+                                                <div class="mb-2">
+                                                    <span class="px-1 inline-flex text-xs leading-4 font-semibold rounded-full {{ $product->verification_status ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100' }}">
+                                                        {{ $product->verification_status ? 'Perlu Sertifikasi' : 'Tidak Perlu Sertifikasi' }}
+                                                    </span>
+                                                </div>
+                                                <div class="flex justify-center space-x-1">
+                                                    <a href="{{ route('products.show', $product) }}"
+                                                        class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 text-xs">View</a>
+                                                    @if(auth()->user()->admin || $product->umkm_id == auth()->id())
+                                                        <a href="{{ route('products.edit', $product) }}"
+                                                            class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300 text-xs">| Edit</a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
                                 <div class="mt-4">
                                     <a href="{{ route('products.index') }}"
@@ -116,7 +100,7 @@
                                     </a>
                                 </div>
                             @else
-                                <p class="text-gray-800 dark:text-gray-200">You haven't registered any products yet.</p>
+                                <p class="text-gray-800 dark:text-gray-700">You haven't registered any products yet.</p>
                                 <a href="{{ route('products.create') }}"
                                     class="inline-flex items-center px-4 py-2 mt-4 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
                                     Add Your First Product
@@ -155,7 +139,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody
-                                                class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600">
+                                                class="bg-sky-50 dark:bg-sky-700 divide-y divide-gray-200 dark:divide-gray-600">
                                                 @foreach($binaan as $user)
                                                     <tr>
                                                         <td

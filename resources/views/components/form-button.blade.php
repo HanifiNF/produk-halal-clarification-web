@@ -3,7 +3,7 @@
 <style>
     .form-btn {
         background-color: transparent;
-        border: 1px solid #ffffff;
+        border: 2px solid #ffffff;
         color: #ffffff;
         padding: 0.5rem 1.5rem;
         border-radius: 0.5rem;
@@ -21,7 +21,7 @@
     }
 
     .form-btn:hover {
-        background-color: #0453d1;
+        background-color: #3b82f6;
         /* Tailwind blue-500 */
         border-color: transparent;
         color: #ffffff;
@@ -29,7 +29,7 @@
     }
 
     .form-btn:active {
-        background-color: #104ed3;
+        background-color: #2563eb;
         /* blue-600 */
         transform: translateY(0);
     }
