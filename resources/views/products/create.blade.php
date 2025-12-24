@@ -7,8 +7,8 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="bg-white dark:bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-600">
                     @if($errors->any())
                         <div class="alert alert-danger">
                             <ul class="list-disc list-inside text-red-600 dark:text-red-400">
@@ -23,25 +23,22 @@
                         @csrf
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Product Name</label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Product
+                                    Name</label>
                                 <input type="text" name="nama_produk"
-                                    class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                    class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-white dark:text-gray-600"
                                     value="{{ old('nama_produk') }}" required>
                             </div>
 
                             <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Product Image</label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Product
+                                    Image</label>
                                 <input type="file" name="product_image"
-                                    class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white">
-                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Optional: Upload product image (max 2MB)</p>
+                                    class="block w-full mt-1 rounded-md border-gray-00 shadow-sm dark:border-gray-700 dark:bg-white dark:text-gray-700">
+                                <p class="text-xs text-gray-500 dark:text-gray-800 mt-1">Optional: Upload product image
+                                    (max 2MB)</p>
                             </div>
 
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Date</label>
-                                <input type="date" name="date"
-                                    class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                                    value="{{ old('date') }}" required>
-                            </div>
 
                             <!-- Verification status is automatically set to pending (0) when created by users -->
                         </div>

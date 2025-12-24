@@ -7,31 +7,31 @@
     </style>
 
     <div id="pageContent" class="content">
-        <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-600 dark:text-gray-100 leading-tight">
+        {{--<x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-600 dark:text-gray-500 leading-tight">
                 {{ __('Dashboard') }}
             </h2>
-        </x-slot>
+        </x-slot>--}}
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white dark:bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-white dark:bg-white overflow-hidden shadow-lg sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-700">
                         <!-- Carousel Placeholder -->
-                        <div class="relative bg-red-500 h-100px flex items-center justify-center my-6">
+                        <div class="relative bg-red-500 flex items-center justify-center my-6">
                             <p class="text-white text-xl font-bold">CAROUSEL PLACEHOLDER</p>
                             <!-- Nanti carousel sebenarnya akan ditambahkan di sini -->
                         </div>
 
                         <div class="mt-6">
-                            <button id="registerUmkmBtn"
+                            {{-- <button id="registerUmkmBtn"
                                 class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
                                 Register New UMKM
-                            </button>
-                            <a href="{{ route('umkm.index') }}"
+                            </button> --}}
+                            {{-- <a href="{{ route('umkm.index') }}"
                                 class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-4">
                                 Manage My UMKMs
-                            </a>
+                            </a> --}}
                             <a href="{{ route('products.create') }}"
                                 class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-4">
                                 Add New Product
@@ -53,32 +53,39 @@
                         <div class="mt-8">
                             <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-700 mb-4">My Products</h3>
                             @php
-                                $userProducts = \App\Models\Product::with('umkm')->where('umkm_id', Auth::id())->latest()->take(5)->get();
+                                $userProducts = \App\Models\Product::with('umkm')->where('umkm_id', Auth::id())->latest()->take(10)->get();
                             @endphp
 
                             @if($userProducts->count() > 0)
-                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                                     @foreach($userProducts as $product)
-                                        <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-sm overflow-hidden">
+                                        <div
+                                            class="bg-white dark:bg-white border rounded-lg shadow-lg overflow-hidden hover:bg-gray-100 dark:hover:bg-gray-100">
                                             <!-- Product Image -->
                                             <a href="{{ route('products.show', $product) }}">
                                                 @if($product->product_image)
-                                                    <img class="rounded-t-lg w-full h-32 object-cover" src="{{ asset('storage/' . $product->product_image) }}" alt="{{ $product->nama_produk }}" />
+                                                    <img class="rounded-t-lg w-full h-32 object-cover"
+                                                        src="{{ asset('storage/' . $product->product_image) }}"
+                                                        alt="{{ $product->nama_produk }}" />
                                                 @else
-                                                    <div class="w-full h-32 bg-gray-200 dark:bg-gray-600 flex items-center justify-center rounded-t-lg">
+                                                    <div
+                                                        class="w-full h-32 bg-gray-200 dark:bg-gray-600 flex items-center justify-center rounded-t-lg">
                                                         <span class="text-gray-500 dark:text-gray-400 text-sm">No Image</span>
                                                     </div>
                                                 @endif
                                             </a>
                                             <div class="p-4 text-center">
                                                 <a href="{{ route('products.show', $product) }}">
-                                                    <h5 class="mt-2 mb-2 text-lg font-semibold tracking-tight text-gray-800 dark:text-gray-200 truncate">
+                                                    <h5
+                                                        class="mt-2 mb-2 text-lg font-semibold tracking-tight text-gray-800 dark:text-gray-700 truncate">
                                                         {{ $product->nama_produk }}
                                                     </h5>
                                                 </a>
                                                 <div class="mb-2">
-                                                    <span class="px-1 inline-flex text-xs leading-4 font-semibold rounded-full {{ $product->verification_status ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100' }}">
-                                                        {{ $product->verification_status ? 'Perlu Sertifikasi' : 'Tidak Perlu Sertifikasi' }}
+                                                    <span
+                                                        class="px-1 inline-flex text-xs leading-4 font-semibold rounded-full {{ $product->verification_status ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100' }}">
+                                                        {{ $product->verification_status ? 'Perlu Sertifikasi' : 'Tidak Perlu
+                                                                                                    Sertifikasi' }}
                                                     </span>
                                                 </div>
                                                 <div class="flex justify-center space-x-1">
@@ -86,7 +93,8 @@
                                                         class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 text-xs">View</a>
                                                     @if(auth()->user()->admin || $product->umkm_id == auth()->id())
                                                         <a href="{{ route('products.edit', $product) }}"
-                                                            class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300 text-xs">| Edit</a>
+                                                            class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300 text-xs">|
+                                                            Edit</a>
                                                     @endif
                                                 </div>
                                             </div>

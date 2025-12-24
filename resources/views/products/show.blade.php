@@ -7,44 +7,46 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="bg-white dark:bg-white overflow-hidden shadow-lg sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-700">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Product
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Product
                                 Name</label>
-                            <p class="text-gray-900 dark:text-gray-100">{{ $product->nama_produk }}</p>
+                            <p class="text-gray-900 dark:text-gray-700">{{ $product->nama_produk }}</p>
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Date</label>
-                            <p class="text-gray-900 dark:text-gray-100">{{ $product->date }}</p>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Date</label>
+                            <p class="text-gray-900 dark:text-gray-700">
+                                {{ \Carbon\Carbon::parse($product->date)->format('d M Y') }}</p>
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Verification
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Verification
                                 Status</label>
-                            <p class="text-gray-900 dark:text-gray-100">
+                            <p class="text-gray-900 dark:text-gray-500">
                                 {{ $product->verification_status ? 'Perlu Sertifikasi' : 'Tidak Perlu Sertifikasi' }}
                             </p>
 
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">UMKM
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">UMKM
                                 Name</label>
-                            <p class="text-gray-900 dark:text-gray-100">
-                                {{ $product->umkm->nama_umkm ?? $product->umkm->name ?? 'N/A' }}</p>
+                            <p class="text-gray-900 dark:text-gray-500">
+                                {{ $product->umkm->nama_umkm ?? $product->umkm->name ?? 'N/A' }}
+                            </p>
                         </div>
 
                         <div class="mb-4 md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Product
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Product
                                 Image</label>
                             @if($product->product_image)
                                 <img src="{{ asset('storage/' . $product->product_image) }}"
                                     alt="{{ $product->nama_produk }}" class="w-32 h-32 object-cover rounded-md">
                             @else
-                                <p class="text-gray-900 dark:text-gray-100">No image uploaded</p>
+                                <p class="text-gray-900 dark:text-gray-500">No image uploaded</p>
                             @endif
                         </div>
                     </div>

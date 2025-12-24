@@ -23,24 +23,57 @@
     </style>
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen" style="background: linear-gradient(to top right, #8dabff, #b3d0ff, #e0efff);">
+<body class="font-sans antialiased min-h-screen flex flex-col"
+    style="background: linear-gradient(to top right, #d7e2ff, #e8f1ff, #f9fcff);">
+    <div class="flex-grow flex flex-col">
         @include('layouts.navigation')
 
         <!-- Page Heading -->
         @if (isset($header))
-            <header class="bg-white dark:bg-gray-800">
+            {{--<header class="bg-white dark:bg-gray-800">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
-            </header>
+            </header>--}}
         @endif
 
         <!-- Page Content -->
-        <main>
+        <main class="flex-grow">
             {{ $slot }}
         </main>
     </div>
+
+
+    <footer class="bg-white rounded-base shadow-xs border border-default w-full">
+        <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+            <div class="sm:flex sm:items-center sm:justify-between">
+                <a href="https:/mui.or.id/" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
+                    <img src="components/logohalal.png" class="h-7" alt="halal Logo" />
+                    <span class="text-heading self-center text-2xl font-semibold whitespace-nowrap">Halal Product
+                        Classification</span>
+                </a>
+                <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-body sm:mb-0">
+                    <li>
+                        <a href="#" class="hover:underline me-4 md:me-6">About</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:underline">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <hr class="my-6 border-default sm:mx-auto lg:my-8" />
+            <span class="block text-sm text-body sm:text-center">© 2025 <a href="https:/mui.or.id/"
+                    class="hover:underline">HalalP™</a>. All Rights Reserved.</span>
+        </div>
+    </footer>
+
+
 </body>
 
 </html>

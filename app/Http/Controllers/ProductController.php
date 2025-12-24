@@ -74,11 +74,11 @@ class ProductController extends Controller
         $request->validate([
             'nama_produk' => 'required|string|max:255',
             'product_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'date' => 'required|date',
         ]);
 
         $productData = $request->all();
         $productData['umkm_id'] = Auth::id();
+        $productData['date'] = now(); // Set date to current date/time
 
         // Handle image upload
         if ($request->hasFile('product_image')) {
@@ -166,11 +166,15 @@ class ProductController extends Controller
             $request->validate([
                 'nama_produk' => 'required|string|max:255',
                 'product_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'date' => 'required|date',
             ]);
         }
 
         $productData = $request->all();
+
+        // Prevent regular users from updating the date field
+        if (!$currentUser->admin) {
+            unset($productData['date']); // Remove date from update data if not admin
+        }
 
         // Handle image update
         if ($request->hasFile('product_image')) {

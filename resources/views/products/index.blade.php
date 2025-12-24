@@ -58,7 +58,7 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                                                 {{ $product->umkm->nama_umkm ?? $product->umkm->name ?? 'N/A' }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                                {{ $product->date }}</td>
+                                                {{ \Carbon\Carbon::parse($product->date)->format('d M Y') }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                                                 {{ $product->verification_status ? 'Perlu Sertifikasi' : 'Tidak Perlu Sertifikasi' }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">

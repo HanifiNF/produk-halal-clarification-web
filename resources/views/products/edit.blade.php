@@ -46,13 +46,23 @@
                                     image (max 2MB)</p>
                             </div>
 
-                            <div class="mb-4">
-                                <label
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Date</label>
-                                <input type="date" name="date"
-                                    class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                                    value="{{ old('date', $product->date) }}" required>
-                            </div>
+                            @if(Auth::user()->admin)
+                                <div class="mb-4">
+                                    <label
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Date</label>
+                                    <input type="date" name="date"
+                                        class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                        value="{{ old('date', $product->date) }}" required>
+                                </div>
+                            @else
+                                <div class="mb-4">
+                                    <label
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Date</label>
+                                    <div class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                                        {{ $product->date }}
+                                    </div>
+                                </div>
+                            @endif
                         </div>
 
                         <button type="submit"
