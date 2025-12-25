@@ -1,4 +1,7 @@
-@props(['type' => 'submit'])
+@props([
+    'href' => null,
+    'type' => 'button'
+])
 
 <style>
     .form-btn {
@@ -41,6 +44,18 @@
     }
 </style>
 
-<button type="{{ $type }}" {{ $attributes->merge(['class' => 'form-btn text-gray-700']) }}>
-    {{ $slot }}
-</button>
+@if ($href)
+    <a
+        href="{{ $href }}"
+        {{ $attributes->merge(['class' => 'form-btn cursor-pointer']) }}
+    >
+        {{ $slot }}
+    </a>
+@else
+    <button
+        type="{{ $type }}"
+        {{ $attributes->merge(['class' => 'form-btn cursor-pointer']) }}
+    >
+        {{ $slot }}
+    </button>
+@endif
