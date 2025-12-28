@@ -7,8 +7,8 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="bg-white dark:bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-700">
                     <div class="flex justify-between items-center mb-6">
                         <h1 class="text-2xl font-bold">All Products</h1>
                     </div>
@@ -21,6 +21,29 @@
 
                     @if($products->count() > 0)
                         <div class="overflow-x-auto">
+                            <div class="p-4">
+                                <form method="GET" action="{{ route('admin.products.index') }}">
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                            <svg class="w-4 h-4 text-body" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                                                    d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                                            </svg>
+                                        </div>
+                                        <input type="text" name="search" value="{{ request('search') }}"
+                                            class="block w-full max-w-96 ps-9 pe-3 py-2 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand px-3 py-2.5 shadow-xs placeholder:text-body"
+                                            placeholder="Search">
+                                        <!-- Preserve sort parameters when searching -->
+                                        @if(request('sort_by'))
+                                            <input type="hidden" name="sort_by" value="{{ request('sort_by') }}">
+                                        @endif
+                                        @if(request('sort_order'))
+                                            <input type="hidden" name="sort_order" value="{{ request('sort_order') }}">
+                                        @endif
+                                    </div>
+                                </form>
+                            </div>
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
                                 <thead class="bg-gray-50 dark:bg-gray-700">
                                     <tr>
@@ -35,25 +58,69 @@
                                             UMKM Name</th>
                                         <th
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                            Date</th>
+                                            <div class="flex items-center">
+                                                Date
+                                                @if(request('sort_by') == 'date' && request('sort_order') == 'asc')
+                                                    <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'date', 'sort_order' => 'desc']) }}" class="ms-1">
+                                                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                                        </svg>
+                                                    </a>
+                                                @elseif(request('sort_by') == 'date' && request('sort_order') == 'desc')
+                                                    <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'date', 'sort_order' => 'asc']) }}" class="ms-1">
+                                                        <svg class="w-4 h-4 rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                                        </svg>
+                                                    </a>
+                                                @else
+                                                    <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'date', 'sort_order' => 'desc']) }}" class="ms-1">
+                                                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                                        </svg>
+                                                    </a>
+                                                @endif
+                                            </div>
+                                        </th>
                                         <th
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                            Verification Status</th>
+                                            <div class="flex items-center">
+                                                Verification Status
+                                                @if(request('sort_by') == 'verification_status' && request('sort_order') == 'asc')
+                                                    <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'verification_status', 'sort_order' => 'desc']) }}" class="ms-1">
+                                                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                                        </svg>
+                                                    </a>
+                                                @elseif(request('sort_by') == 'verification_status' && request('sort_order') == 'desc')
+                                                    <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'verification_status', 'sort_order' => 'asc']) }}" class="ms-1">
+                                                        <svg class="w-4 h-4 rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                                        </svg>
+                                                    </a>
+                                                @else
+                                                    <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'verification_status', 'sort_order' => 'desc']) }}" class="ms-1">
+                                                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                                        </svg>
+                                                    </a>
+                                                @endif
+                                            </div>
+                                        </th>
                                         <th
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                             Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600">
+                                <tbody class="bg-white dark:bg-white divide-y divide-gray-200 dark:divide-gray-600">
                                     @foreach($products as $product)
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-700">
                                                 {{ $product->id }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-700">
                                                 {{ $product->nama_produk }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-700">
                                                 {{ $product->umkm->nama_umkm ?? 'N/A' }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-700">
                                                 {{ \Carbon\Carbon::parse($product->date)->format('d M Y') }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm">
                                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $product->verification_status ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100' }}">

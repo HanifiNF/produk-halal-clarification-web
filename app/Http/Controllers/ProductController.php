@@ -36,25 +36,71 @@ class ProductController extends Controller
             $query->where('umkm_id', Auth::id());
         }
 
-        $products = $query->orderBy('created_at', 'desc')->paginate(10);
+        // Handle search
+        $search = $request->get('search');
+        if ($search) {
+            $query->where('nama_produk', 'like', '%' . $search . '%');
+        }
 
-        return view('products.index', compact('products'));
+        // Handle sorting
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
+
+        // Validate sort parameters to prevent injection
+        $validSortColumns = ['created_at', 'date', 'verification_status'];
+        if (!in_array($sortBy, $validSortColumns)) {
+            $sortBy = 'created_at';
+        }
+
+        $validSortOrders = ['asc', 'desc'];
+        if (!in_array($sortOrder, $validSortOrders)) {
+            $sortOrder = 'desc';
+        }
+
+        $products = $query->orderBy($sortBy, $sortOrder)->paginate(10);
+        $products->appends(['search' => $search, 'sort_by' => $sortBy, 'sort_order' => $sortOrder]);
+
+        return view('products.index', compact('products', 'sortBy', 'sortOrder', 'search'));
     }
 
     /**
      * Display all products for admin users.
      */
-    public function adminIndex()
+    public function adminIndex(Request $request)
     {
         $currentUser = Auth::user();
         if (!$currentUser->admin && !$currentUser->data_access) {
             abort(403, 'Unauthorized access. Admin or data access required.');
         }
 
-        $products = Product::with('umkm')
-            ->paginate(10);
+        $query = Product::with('umkm');
 
-        return view('products.admin-index', compact('products'));
+        // Handle search
+        $search = $request->get('search');
+        if ($search) {
+            $query->where('nama_produk', 'like', '%' . $search . '%');
+        }
+
+        // Handle sorting
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
+
+        // Validate sort parameters to prevent injection
+        $validSortColumns = ['created_at', 'date', 'verification_status'];
+        if (!in_array($sortBy, $validSortColumns)) {
+            $sortBy = 'created_at';
+        }
+
+        $validSortOrders = ['asc', 'desc'];
+        if (!in_array($sortOrder, $validSortOrders)) {
+            $sortOrder = 'desc';
+        }
+
+        $products = $query->orderBy($sortBy, $sortOrder)
+            ->paginate(10);
+        $products->appends(['search' => $search, 'sort_by' => $sortBy, 'sort_order' => $sortOrder]);
+
+        return view('products.admin-index', compact('products', 'sortBy', 'sortOrder', 'search'));
     }
 
     /**
