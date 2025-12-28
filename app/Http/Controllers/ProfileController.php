@@ -28,7 +28,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $validatedData = $request->validated();
-        
+
         // Update the user with validated data
         $user->fill($validatedData);
 

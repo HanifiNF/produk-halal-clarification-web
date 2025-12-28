@@ -85,7 +85,7 @@
                                                     <span
                                                         class="px-1 inline-flex text-xs leading-4 font-semibold rounded-full {{ $product->verification_status ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100' }}">
                                                         {{ $product->verification_status ? 'Perlu Sertifikasi' : 'Tidak Perlu
-                                                                                                    Sertifikasi' }}
+                                                                                                                                            Sertifikasi' }}
                                                     </span>
                                                 </div>
                                                 <div class="flex justify-center space-x-1">
@@ -119,9 +119,9 @@
                         @if(Auth::user()->status_pembina)
                             <!-- Display Pembina's Binaan -->
                             <div class="mt-8">
-                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">My Binaan</h3>
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-700 mb-4">My Binaan</h3>
                                 @php
-                                    $binaan = \App\Models\User::where('pembina_id', Auth::id())->latest()->take(5)->get();
+                                    $binaan = \App\Models\User::where('pembina_id', Auth::id())->latest()->take(10)->get();
                                 @endphp
 
                                 @if($binaan->count() > 0)
@@ -147,28 +147,28 @@
                                                 </tr>
                                             </thead>
                                             <tbody
-                                                class="bg-sky-50 dark:bg-sky-700 divide-y divide-gray-200 dark:divide-gray-600">
+                                                class="bg-sky-50 dark:bg-white divide-y divide-gray-200 dark:divide-gray-600">
                                                 @foreach($binaan as $user)
                                                     <tr>
                                                         <td
-                                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-700">
                                                             {{ $user->name }}
                                                         </td>
                                                         <td
-                                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-700">
                                                             {{ $user->email }}
                                                         </td>
                                                         <td
-                                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-700">
                                                             {{ $user->nama_umkm ?? 'N/A' }}
                                                         </td>
                                                         <td
-                                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-700">
                                                             {{ $user->city ?? 'N/A' }}
                                                         </td>
                                                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                                                             <a href="{{ route('products.index', ['user_id' => $user->id]) }}"
-                                                                class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">View
+                                                                class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-500">View
                                                                 Products</a>
                                                         </td>
                                                     </tr>

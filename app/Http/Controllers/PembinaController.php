@@ -13,18 +13,29 @@ class PembinaController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        
+
         // Hanya pengguna dengan status_pembina = true yang bisa mengakses halaman ini
         if (!$user->status_pembina) {
             abort(403, 'Unauthorized access. Pembina access required.');
         }
 
-        $binaan = User::where('pembina_id', $user->id)
-            ->paginate(10);
+        $query = User::where('pembina_id', $user->id);
 
-        return view('pembina.binaan', compact('binaan'));
+        // Handle search
+        $search = $request->get('search');
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                  ->orWhere('nama_umkm', 'like', '%' . $search . '%');
+            });
+        }
+
+        $binaan = $query->paginate(10);
+        $binaan->appends(['search' => $search]);
+
+        return view('pembina.binaan', compact('binaan', 'search'));
     }
 }

@@ -24,6 +24,7 @@ class ProfileUpdateRequest extends FormRequest
             'city' => ['nullable', 'string', 'max:100'],
             'province' => ['nullable', 'string', 'max:100'],
             'establish_year' => ['nullable', 'integer', 'min:1900', 'max:' . date('Y')],
+            'pembina_id' => ['nullable', 'exists:users,id'],
         ];
     }
 }

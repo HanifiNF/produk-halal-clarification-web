@@ -17,7 +17,8 @@
         @csrf
         @method('patch')
 
-        <div>
+        <div class="grid grid-cols-2 gap-4">
+            <div>
             <x-input-label-app for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)"
                 required autofocus autocomplete="name" />
@@ -88,6 +89,26 @@
                 autocomplete="establish_year" />
             <x-input-error class="mt-2" :messages="$errors->get('establish_year')" />
         </div>
+
+        <!-- Pembina Selection - Only show if user is not already a pembina -->
+        @if(!$user->status_pembina)
+            <div>
+                <x-input-label-app for="pembina_id" :value="__('Pembina')" />
+                <select id="pembina_id"
+                    class="block mt-1 w-full border-gray-300 dark:border-gray-700 bg-white dark:bg-white dark:text-white-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                    name="pembina_id" autocomplete="pembina_id">
+                    <option value="">-- Pilih Pembina --</option>
+                    @foreach(\App\Models\User::where('status_pembina', true)->get() as $pembina)
+                        <option value="{{ $pembina->id }}" {{ old('pembina_id', $user->pembina_id) == $pembina->id ? 'selected' : '' }}>
+                            {{ $pembina->name }} ({{ $pembina->email }})
+                        </option>
+                    @endforeach
+                </select>
+                <x-input-error class="mt-2" :messages="$errors->get('pembina_id')" />
+            </div>
+        @endif
+        </div>
+
 
         <div class="flex items-center gap-4">
             <button
