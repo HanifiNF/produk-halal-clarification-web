@@ -1,20 +1,39 @@
-# Use Node.js official image
-FROM node:20
+# Step 1: Use PHP 8.1 FPM image
+FROM php:8.1-fpm
 
-# Set working directory
-WORKDIR /app
+WORKDIR /var/www/html
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+# Step 2: Install system dependencies + Node.js
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    nodejs \
+    npm \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install Node dependencies
-RUN npm install
+# Step 3: Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy the rest of your frontend files (Vite entry points)
+# Step 4: Copy app files
 COPY . .
 
-# Build the assets
+# Step 5: Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
+
+# Step 6: Install Node dependencies & build frontend assets
+RUN npm install
 RUN npm run build
 
-# The built assets will be in public/build
-# You can copy them back to your Laravel project or use a volume
+# Step 7: Set permissions
+RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache
+
+# Step 8: Expose port and start PHP-FPM
+EXPOSE 9000
+CMD ["php-fpm"]
