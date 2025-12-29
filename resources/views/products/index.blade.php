@@ -10,10 +10,10 @@
             <div class="bg-white dark:bg-white overflow-hidden shadow-lg sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-600">
                     <div class="flex justify-between items-center mb-6">
-                        <h1 class="text-2xl font-bold">My Products</h1>
+                        <h1 class="text-2xl font-bold">List Produk</h1>
                         <a href="{{ route('products.create') }}"
                             class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-200 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-gray-900 focus:bg-gray-700 dark:focus:bg-gray-200 active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
-                            Add New Product
+                            Tambah Produk
                         </a>
                     </div>
 
@@ -61,7 +61,7 @@
                                             ID</th>
                                         <th
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                            Product Name</th>
+                                            Nama Produk</th>
                                         @if(auth()->user()->admin || auth()->user()->data_access || auth()->user()->status_pembina)
                                             <th
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
@@ -107,7 +107,7 @@
                                         <th
                                             class="px-6 py-3 font-medium text-xs text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                             <div class="flex items-center">
-                                                Verification Status
+                                                Status Klarifikasi
                                                 @if(request('sort_by') == 'verification_status' && request('sort_order') == 'asc')
                                                     <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'verification_status', 'sort_order' => 'desc']) }}"
                                                         class="ms-1">

@@ -11,20 +11,21 @@
                 <div class="p-6 text-gray-900 dark:text-gray-700">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Product
-                                Name</label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Nama
+                                Produk</label>
                             <p class="text-gray-900 dark:text-gray-700">{{ $product->nama_produk }}</p>
                         </div>
 
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Date</label>
                             <p class="text-gray-900 dark:text-gray-700">
-                                {{ \Carbon\Carbon::parse($product->date)->format('d M Y') }}</p>
+                                {{ \Carbon\Carbon::parse($product->date)->format('d M Y') }}
+                            </p>
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Verification
-                                Status</label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">
+                                Status Klarifikasi</label>
                             <p class="text-gray-900 dark:text-gray-500">
                                 {{ $product->verification_status ? 'Perlu Sertifikasi' : 'Tidak Perlu Sertifikasi' }}
                             </p>
@@ -40,8 +41,8 @@
                         </div>
 
                         <div class="mb-4 md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Product
-                                Image</label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Gambar
+                                Produk</label>
                             @if($product->product_image)
                                 <img src="{{ asset('storage/' . $product->product_image) }}"
                                     alt="{{ $product->nama_produk }}" class="w-32 h-32 object-cover rounded-md">

@@ -34,24 +34,24 @@
                             </a> --}}
                             <a href="{{ route('products.create') }}"
                                 class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-4">
-                                Add New Product
+                                Tambah Produk
                             </a>
                             <a href="{{ route('products.index') }}"
                                 class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-4">
-                                Manage My Products
+                                Lihat Produk
                             </a>
 
                             @if(Auth::user()->status_pembina)
                                 <a href="{{ route('pembina.binaan') }}"
                                     class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-4">
-                                    Manage My Binaan
+                                    List Binaan
                                 </a>
                             @endif
                         </div>
 
                         <!-- Display User's Products -->
                         <div class="mt-8">
-                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-700 mb-4">My Products</h3>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-700 mb-4">Produk-Produk</h3>
                             @php
                                 $userProducts = \App\Models\Product::with('umkm')->where('umkm_id', Auth::id())->latest()->take(10)->get();
                             @endphp
@@ -85,7 +85,7 @@
                                                     <span
                                                         class="px-1 inline-flex text-xs leading-4 font-semibold rounded-full {{ $product->verification_status ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100' }}">
                                                         {{ $product->verification_status ? 'Perlu Sertifikasi' : 'Tidak Perlu
-                                                                                                                                            Sertifikasi' }}
+                                                                                                                                                            Sertifikasi' }}
                                                     </span>
                                                 </div>
                                                 <div class="flex justify-center space-x-1">
@@ -104,7 +104,7 @@
                                 <div class="mt-4">
                                     <a href="{{ route('products.index') }}"
                                         class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">
-                                        View All Products &rarr;
+                                        Lihat Semua Produk &rarr;
                                     </a>
                                 </div>
                             @else

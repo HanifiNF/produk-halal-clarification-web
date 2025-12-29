@@ -23,16 +23,16 @@
                         @csrf
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Product
-                                    Name</label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Nama
+                                    Produk</label>
                                 <input type="text" name="nama_produk"
                                     class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-white dark:text-gray-600"
                                     value="{{ old('nama_produk') }}" required>
                             </div>
 
                             <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Product
-                                    Image</label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Gambar
+                                    Produk</label>
                                 <input type="file" name="product_image"
                                     class="block w-full mt-1 rounded-md border-gray-00 shadow-sm dark:border-gray-700 dark:bg-white dark:text-gray-700">
                                 <p class="text-xs text-gray-500 dark:text-gray-800 mt-1">Optional: Upload product image
@@ -45,7 +45,7 @@
 
                         <button type="submit"
                             class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
-                            Create Product
+                            Submit
                         </button>
                     </form>
                 </div>
