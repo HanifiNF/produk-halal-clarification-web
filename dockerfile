@@ -26,9 +26,17 @@ COPY . .
 # Step 5: Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
+# Install Node
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
+
 # Step 6: Install Node dependencies & build frontend assets
 RUN npm install
 RUN npm run build
+
+# Clear Laravel caches AFTER build
+RUN php artisan config:clear \
+    && php artisan view:clear
 
 # Step 7: Set permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
