@@ -11,4 +11,15 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    build: {
+           // Ensure assets are properly hashed for production
+          manifest: true,
+          rollupOptions: {
+            output: {
+                entryFileNames: `assets/[name].[hash].js`,
+                chunkFileNames: `assets/[name].[hash].js`,
+                assetFileNames: `assets/[name].[hash].[ext]`,
+            }
+         }
+     }
 });

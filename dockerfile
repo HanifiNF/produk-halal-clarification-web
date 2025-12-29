@@ -26,7 +26,9 @@ RUN npm run build
 
 # Clear caches AFTER build
 RUN php artisan config:clear \
-    && php artisan view:clear
+    && php artisan view:clear \
+    && php artisan cache:clear \
+    && php artisan route:clear 
 
 # Permissions
 RUN chown -R www-data:www-data storage bootstrap/cache \
