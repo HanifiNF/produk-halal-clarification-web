@@ -134,7 +134,8 @@ class ProductController extends Controller
             // 🔥 CALL ML API
             try {
                 $client = new \GuzzleHttp\Client();
-                $response = $client->request('POST', 'http://127.0.0.1:8000/predict', [
+                $mlApiUrl = env('ML_API_URL', 'http://127.0.0.1:8000/predict');
+                $response = $client->request('POST', $mlApiUrl, [
                     'multipart' => [
                         [
                             'name'     => 'file',
@@ -230,7 +231,8 @@ class ProductController extends Controller
             // 🔥 CALL ML API
             try {
                 $client = new \GuzzleHttp\Client();
-                $response = $client->request('POST', 'http://127.0.0.1:8000/predict', [
+                $mlApiUrl = env('ML_API_URL', 'http://127.0.0.1:8000/predict');
+                $response = $client->request('POST', $mlApiUrl, [
                     'multipart' => [
                         [
                             'name'     => 'file',
