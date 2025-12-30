@@ -28,6 +28,9 @@ RUN php artisan cache:clear
 RUN php artisan route:clear
 RUN php artisan view:clear
 
+# Create storage symlink
+RUN php artisan storage:link || true
+
 # Permissions
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
