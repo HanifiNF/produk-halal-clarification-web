@@ -5,7 +5,7 @@ WORKDIR /var/www
 # System dependencies
 RUN apt-get update && apt-get install -y \
     git unzip curl libpng-dev libonig-dev libxml2-dev zip \
-    && docker-php-ext-install pdo pdo_mysql mbstring bcmath gd
+    && docker-php-ext-install pdo pdo_mysql pdo_pgsql mbstring bcmath gd
 
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
