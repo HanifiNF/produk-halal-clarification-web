@@ -134,7 +134,7 @@ class ProductController extends Controller
             // 🔥 CALL ML API
             try {
                 $client = new \GuzzleHttp\Client();
-                $response = $client->request('POST', 'httpsklasifikasihalalmodel-production.up.railway.app/predict', [
+                $response = $client->request('POST', 'https://klasifikasihalalmodel-production.up.railway.app/predict', [
                     'multipart' => [
                         [
                             'name'     => 'file',
@@ -230,7 +230,7 @@ class ProductController extends Controller
             // 🔥 CALL ML API
             try {
                 $client = new \GuzzleHttp\Client();
-                $response = $client->request('POST', 'httpsklasifikasihalalmodel-production.up.railway.app/predict', [
+                $response = $client->request('POST', 'https://klasifikasihalalmodel-production.up.railway.app/predict', [
                     'multipart' => [
                         [
                             'name'     => 'file',
