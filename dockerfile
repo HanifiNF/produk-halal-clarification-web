@@ -4,7 +4,7 @@ WORKDIR /var/www
 
 # System dependencies
 RUN apt-get update && apt-get install -y \
-    git unzip curl libpng-dev libonig-dev libxml2-dev libpq-dev zip \
+    git unzip curl libpng-dev libonig-dev libxml2-dev libpq-dev zip nodejs npm \
     && docker-php-ext-install pdo pdo_mysql pdo_pgsql mbstring bcmath gd
 
 # Composer
@@ -15,6 +15,18 @@ COPY . .
 
 # Install PHP deps
 RUN composer install --no-dev --optimize-autoloader
+
+# Install Node.js deps
+RUN npm install
+
+# Build assets with Vite
+RUN npm run build
+
+# Clear Laravel caches
+RUN php artisan config:clear
+RUN php artisan cache:clear
+RUN php artisan route:clear
+RUN php artisan view:clear
 
 # Permissions
 RUN chown -R www-data:www-data storage bootstrap/cache \
