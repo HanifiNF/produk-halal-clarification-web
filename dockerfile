@@ -22,6 +22,11 @@ RUN chown -R www-data:www-data storage bootstrap/cache \
 
 EXPOSE 10000
 
-CMD php artisan serve --host=0.0.0.0 --port=10000
+# Create a startup script
+RUN echo "#!/bin/bash" > /start.sh
+RUN echo "set -e" >> /start.sh
+RUN echo "php artisan migrate --force || echo \"Migration failed or not needed\"" >> /start.sh
+RUN echo "php artisan serve --host=0.0.0.0 --port=10000" >> /start.sh
+RUN chmod +x /start.sh
 
-RUN php artisan migrate --force || true
+CMD ["/start.sh"]

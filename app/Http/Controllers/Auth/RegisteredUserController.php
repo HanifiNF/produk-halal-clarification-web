@@ -21,7 +21,15 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         // Dapatkan daftar pembina (user dengan status_pembina = 1)
-        $pembinaList = \App\Models\User::where('status_pembina', true)->get();
+        // Use try-catch to handle potential database issues
+        try {
+            $pembinaList = \App\Models\User::where('status_pembina', true)->get();
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            \Log::error('Error fetching pembina list: ' . $e->getMessage());
+            // Return empty collection if there's an error
+            $pembinaList = collect();
+        }
 
         return view('auth.register', compact('pembinaList'));
     }
@@ -44,12 +52,17 @@ class RegisteredUserController extends Controller
             'establish_year' => ['nullable', 'integer', 'min:1900', 'max:'.date('Y')],
             'pembina_id' => ['nullable', 'exists:users,id', function ($attribute, $value, $fail) {
                 if (!empty($value)) {
-                    $pembinaExists = User::where('id', $value)
-                        ->where('status_pembina', true)
-                        ->exists();
+                    try {
+                        $pembinaExists = User::where('id', $value)
+                            ->where('status_pembina', true)
+                            ->exists();
 
-                    if (!$pembinaExists) {
-                        $fail('The selected pembina is not valid or does not have pembina status.');
+                        if (!$pembinaExists) {
+                            $fail('The selected pembina is not valid or does not have pembina status.');
+                        }
+                    } catch (\Exception $e) {
+                        \Log::error('Error validating pembina: ' . $e->getMessage());
+                        $fail('There was an error validating the pembina selection.');
                     }
                 }
             }],
