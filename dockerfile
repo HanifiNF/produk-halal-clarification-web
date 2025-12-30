@@ -22,11 +22,16 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Laravel permissions
-RUN chown -R www-data:www-data storage bootstrap/cache
+# Set proper permissions
+RUN chown -R www-data:www-data /var/www
+RUN chmod -R 755 /var/www
 
 # Expose port
 EXPOSE 8080
 
-# Start Laravel
-CMD php artisan serve --host=0.0.0.0 --port=$PORT
+# Create entrypoint script
+RUN echo '#!/bin/bash\nset -e\n\ncd /var/www\n\n# Run database migrations\nphp artisan migrate --force\n\n# Start Laravel server\nexec php artisan serve --host=0.0.0.0 --port=${PORT:-8080}' > /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Set entrypoint
+ENTRYPOINT ["/entrypoint.sh"]

@@ -24,6 +24,8 @@
             color: #c7cace;
             /* gray-300 */
         }
+
+        
     </style>
 </head>
 
