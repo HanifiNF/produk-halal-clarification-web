@@ -110,7 +110,7 @@
                 {{ __('Produk') }}
             </x-responsive-nav-link>
         </div>
-        
+
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
@@ -130,20 +130,20 @@
                 @if(Auth::user()->status_pembina)
                     <x-responsive-nav-link :href="route('pembina.binaan')">
                         {{ __('Daftar Binaan') }}
-                    <x-responsive-nav-linkk>
+                    </x-responsive-nav-link>
                 @endif
 
                 @if(Auth::user()->admin)
-                    x-responsive-nav-linkk :href="route('admin.dashboard')">
+                    <x-responsive-nav-link :href="route('admin.dashboard')">
                         {{ __('Admin Dashboard') }}
-                    <x-responsive-nav-linkk>
+                    </x-responsive-nav-link>
                 @endif
 
                 @if(Auth::user()->data_access && !Auth::user()->admin)
-                    x-responsive-nav-linkk :href="route('data.access.dashboard')">
+                    <x-responsive-nav-link :href="route('data.access.dashboard')">
                         {{ __('Data Access Dashboard') }}
-                    <x-responsive-nav-linkk>
-                endif
+                    </x-responsive-nav-link>
+                @endif
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
