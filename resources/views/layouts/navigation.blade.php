@@ -105,6 +105,12 @@
                 {{ __('Beranda') }}
             </x-responsive-nav-link>
         </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
+                {{ __('Produk') }}
+            </x-responsive-nav-link>
+        </div>
+        
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
@@ -118,9 +124,26 @@
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('umkm.index')">
+                {{-- <x-responsive-nav-link :href="route('umkm.index')">
                     {{ __('Manage UMKMs') }}
-                </x-responsive-nav-link>
+                </x-responsive-nav-link> --}}
+                @if(Auth::user()->status_pembina)
+                    <x-responsive-nav-link :href="route('pembina.binaan')">
+                        {{ __('Daftar Binaan') }}
+                    <x-responsive-nav-linkk>
+                @endif
+
+                @if(Auth::user()->admin)
+                    x-responsive-nav-linkk :href="route('admin.dashboard')">
+                        {{ __('Admin Dashboard') }}
+                    <x-responsive-nav-linkk>
+                @endif
+
+                @if(Auth::user()->data_access && !Auth::user()->admin)
+                    x-responsive-nav-linkk :href="route('data.access.dashboard')">
+                        {{ __('Data Access Dashboard') }}
+                    <x-responsive-nav-linkk>
+                endif
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
