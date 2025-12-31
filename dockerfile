@@ -41,7 +41,7 @@ EXPOSE 10000
 RUN echo "#!/bin/bash" > /start.sh
 RUN echo "set -e" >> /start.sh
 RUN echo "php artisan migrate --force || echo \"Migration failed or not needed\"" >> /start.sh
-RUN echo "php artisan db:seed --class=Database\\\\Seeders\\\\AdminUserSeeder --force || echo \"Admin seeding failed or not needed\"" >> /start.sh
+RUN echo "php artisan db:seed --class='Database\\\\Seeders\\\\AdminUserSeeder' --force || echo \"Admin seeding failed or not needed\"" >> /start.sh
 RUN echo "php artisan serve --host=0.0.0.0 --port=10000" >> /start.sh
 RUN chmod +x /start.sh
 
