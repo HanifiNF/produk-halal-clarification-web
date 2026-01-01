@@ -17,33 +17,33 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-white overflow-hidden shadow-lg sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-700">
-                        <!-- Carousel Placeholder -->
-                        <div class="relative bg-red-500 flex items-center justify-center my-6">
-                            <p class="text-white text-xl font-bold">CAROUSEL PLACEHOLDER</p>
-                            <!-- Nanti carousel sebenarnya akan ditambahkan di sini -->
+                        <!-- Welcome Message -->
+                        <div class="relative bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center my-6 p-8 rounded-lg">
+                            <div class="text-center">
+                                <h1 class="text-gray-700 text-2xl md:text-3xl font-bold mb-4">
+                                    Selamat Datang {{ Auth::user()->name }}!
+                                </h1>
+                                <p class="text-gray-700 text-base md:text-lg max-w-3xl">
+                                    Aplikasi ini dirancang untuk membantu UMKM dalam mengelola dan memverifikasi produk halal mereka.
+                                    Anda dapat mendaftarkan produk, melacak status verifikasi, dan mengelola informasi UMKM Anda dengan mudah.
+                                </p>
+                            </div>
                         </div>
 
-                        <div class="mt-6">
-                            {{-- <button id="registerUmkmBtn"
-                                class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
-                                Register New UMKM
-                            </button> --}}
-                            {{-- <a href="{{ route('umkm.index') }}"
-                                class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-4">
-                                Manage My UMKMs
-                            </a> --}}
+                        <!-- Action Buttons -->
+                        <div class="flex flex-wrap justify-center gap-4 mt-6">
                             <a href="{{ route('products.create') }}"
-                                class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-4">
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
                                 Tambah Produk
                             </a>
                             <a href="{{ route('products.index') }}"
-                                class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-4">
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
                                 Lihat Produk
                             </a>
 
                             @if(Auth::user()->status_pembina)
                                 <a href="{{ route('pembina.binaan') }}"
-                                    class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-4">
+                                    class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
                                     List Binaan
                                 </a>
                             @endif

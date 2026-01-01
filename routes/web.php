@@ -22,6 +22,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
+Route::get('/howto', function () {
+    return view('howto');
+})->name('howto');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/dashboard', function () {
