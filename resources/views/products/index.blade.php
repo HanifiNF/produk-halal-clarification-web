@@ -65,12 +65,12 @@
                                         @if(auth()->user()->admin || auth()->user()->data_access || auth()->user()->status_pembina)
                                             <th
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                                UMKM Name</th>
+                                                Nama UMKM</th>
                                         @endif
                                         <th
                                             class="px-6 py-3  text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                             <div class="flex items-center">
-                                                Date
+                                                Tanggal Upload
                                                 @if(request('sort_by') == 'date' && request('sort_order') == 'asc')
                                                     <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'date', 'sort_order' => 'desc']) }}"
                                                         class="ms-1">
@@ -197,7 +197,7 @@
                             {{ $products->links() }}
                         </div>
                     @else
-                        <p class="text-gray-800 dark:text-gray-600">You haven't registered any products yet.</p>
+                        <p class="text-gray-800 dark:text-gray-600">Anda belum mempunyai produk</p>
                     @endif
                 </div>
             </div>

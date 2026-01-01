@@ -20,10 +20,10 @@
                         <!-- Welcome Message -->
                         <div class="relative bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center my-6 p-8 rounded-lg">
                             <div class="text-center">
-                                <h1 class="text-gray-700 text-2xl md:text-3xl font-bold mb-4">
+                                <h1 class="text-white text-2xl md:text-3xl font-bold mb-4">
                                     Selamat Datang {{ Auth::user()->name }}!
                                 </h1>
-                                <p class="text-gray-700 text-base md:text-lg max-w-3xl">
+                                <p class="text-white text-base md:text-lg max-w-3xl">
                                     Aplikasi ini dirancang untuk membantu UMKM dalam mengelola dan memverifikasi produk halal mereka.
                                     Anda dapat mendaftarkan produk, melacak status verifikasi, dan mengelola informasi UMKM Anda dengan mudah.
                                 </p>
@@ -111,7 +111,7 @@
                                 <p class="text-gray-800 dark:text-gray-700">You haven't registered any products yet.</p>
                                 <a href="{{ route('products.create') }}"
                                     class="inline-flex items-center px-4 py-2 mt-4 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
-                                    Add Your First Product
+                                    Tambah Produk pertama
                                 </a>
                             @endif
                         </div>

@@ -17,7 +17,8 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Date</label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Tanggal
+                                Upload</label>
                             <p class="text-gray-900 dark:text-gray-700">
                                 {{ \Carbon\Carbon::parse($product->date)->format('d M Y') }}
                             </p>
@@ -33,8 +34,8 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">UMKM
-                                Name</label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">Nama
+                                UMKM</label>
                             <p class="text-gray-900 dark:text-gray-500">
                                 {{ $product->umkm->nama_umkm ?? $product->umkm->name ?? 'N/A' }}
                             </p>
@@ -59,7 +60,7 @@
                         </a>
                         <a href="{{ route('products.index') }}"
                             class="inline-flex items-center px-4 py-2 bg-gray-500 dark:bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white dark:text-white uppercase tracking-widest hover:bg-gray-600 dark:hover:bg-gray-600 focus:bg-gray-600 dark:focus:bg-gray-600 active:bg-gray-700 dark:active:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
-                            Back to Products
+                            Kembali ke produk
                         </a>
                     </div>
                 </div>

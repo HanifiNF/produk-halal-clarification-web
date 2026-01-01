@@ -24,7 +24,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="mb-4">
                                 <label
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Name</label>
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama</label>
                                 <input type="text" name="name"
                                     class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                     value="{{ old('name') }}" required>
@@ -37,8 +37,7 @@
                                     value="{{ old('email') }}" required>
                             </div>
                             <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phone
-                                    Number</label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nomor Handphone</label>
                                 <input type="text" name="phone_number"
                                     class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                     value="{{ old('phone_number') }}">
@@ -51,36 +50,34 @@
                                     required>
                             </div>
                             <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">UMKM
-                                    Name</label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama UMKM</label>
                                 <input type="text" name="nama_umkm"
                                     class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                     value="{{ old('nama_umkm') }}">
                             </div>
                             <div class="mb-4">
                                 <label
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Address</label>
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Alamat</label>
                                 <input type="text" name="address"
                                     class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                     value="{{ old('address') }}">
                             </div>
                             <div class="mb-4">
                                 <label
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">City</label>
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kota</label>
                                 <input type="text" name="city"
                                     class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                     value="{{ old('city') }}">
                             </div>
                             <div class="mb-4">
                                 <label
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Province</label>
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Provinsi</label>
                                 <input type="text" name="province"
                                     class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                     value="{{ old('province') }}">
                             </div>
                             <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Establish
-                                    Year</label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tahun Diberdirikan</label>
                                 <input type="number" name="establish_year"
                                     class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                     value="{{ old('establish_year') }}" min="1900" max="{{ date('Y') }}">
