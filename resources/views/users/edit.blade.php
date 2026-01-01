@@ -25,7 +25,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="mb-4">
                                 <label
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Name</label>
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama</label>
                                 <input type="text" name="name"
                                     class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                     value="{{ old('name', $user->name) }}" required>
@@ -38,21 +38,19 @@
                                     value="{{ old('email', $user->email) }}" required>
                             </div>
                             <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phone
-                                    Number</label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nomor Handphone</label>
                                 <input type="text" name="phone_number"
                                     class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                     value="{{ old('phone_number', $user->phone_number) }}">
                             </div>
                             <div class="mb-4">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password
-                                    (leave blank to keep)</label>
+                                    (Kosongkan untuk tidak mengganti)</label>
                                 <input type="password" name="password"
                                     class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white">
                             </div>
                             <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">UMKM
-                                    Name</label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama UMKM</label>
                                 <input type="text" name="nama_umkm"
                                     class="block w-full mt-1 rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                     value="{{ old('nama_umkm', $user->nama_umkm) }}">
