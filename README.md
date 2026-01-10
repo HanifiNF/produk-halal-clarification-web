@@ -1,4 +1,4 @@
-# QWEN.md - Produk Halal KP Project Context
+# Produk Halal KP Project Context
 
 ## Project Overview
 
