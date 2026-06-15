@@ -14,20 +14,22 @@ class AdminUserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin123'),
-            'phone_number' => '081234567890',
-            'nama_umkm' => 'Admin UMKM',
-            'address' => 'Jl. Admin No.1',
-            'city' => 'Admin City',
-            'province' => 'Admin Province',
-            'establish_year' => 2020,
-            'status_pembina' => false,
-            'pembina_id' => null,
-            'admin' => true,
-            'data_access' => false,
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'admin',
+                'password' => Hash::make('admin123'),
+                'phone_number' => '081234567890',
+                'nama_umkm' => 'Admin UMKM',
+                'address' => 'Jl. Admin No.1',
+                'city' => 'Admin City',
+                'province' => 'Admin Province',
+                'establish_year' => 2020,
+                'status_pembina' => false,
+                'pembina_id' => null,
+                'admin' => true,
+                'data_access' => false,
+            ]
+        );
     }
 }

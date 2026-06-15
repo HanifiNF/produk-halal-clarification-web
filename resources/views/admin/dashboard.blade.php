@@ -7,8 +7,8 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="bg-white dark:bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-800">
                     @if (session('status'))
                         <div class="alert alert-success bg-green-100 text-green-700 p-3 rounded mb-4">
                             {{ session('status') }}
@@ -19,7 +19,7 @@
                     <p class="mb-6">You are currently logged in as an admin user.</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg shadow text-center">
+                        <div class="bg-gray-50 dark:bg-gray-100 p-6 rounded-lg shadow text-center">
                             <h4 class="text-xl font-semibold mb-2">Users Management</h4>
                             <p class="mb-4">Total registered users</p>
                             <a href="{{ route('users.index') }}"
@@ -27,7 +27,7 @@
                                 Manage Users
                             </a>
                         </div>
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg shadow text-center">
+                        <div class="bg-gray-50 dark:bg-gray-`00 p-6 rounded-lg shadow text-center">
                             <h4 class="text-xl font-semibold mb-2">Umkm Management</h4>
                             <p class="mb-4">Total registered umkm</p>
                             <a href="{{ route('umkm.listall') }}"
@@ -35,7 +35,7 @@
                                 Manage UMKMs
                             </a>
                         </div>
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg shadow text-center">
+                        <div class="bg-gray-50 dark:bg-gray-100 p-6 rounded-lg shadow text-center">
                             <h4 class="text-xl font-semibold mb-2">Halal Products</h4>
                             <p class="mb-4">Manage halal product data</p>
                             <a href="{{ route('admin.products.index') }}"
@@ -43,7 +43,7 @@
                                 Manage Products
                             </a>
                         </div>
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg shadow text-center">
+                        <div class="bg-gray-50 dark:bg-gray-100 p-6 rounded-lg shadow text-center">
                             <h4 class="text-xl font-semibold mb-2">Reports</h4>
                             <p class="mb-4">View system reports</p>
                             <a href="#"

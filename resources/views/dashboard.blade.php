@@ -18,14 +18,17 @@
                 <div class="bg-white dark:bg-white overflow-hidden shadow-lg sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-700">
                         <!-- Welcome Message -->
-                        <div class="relative bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center my-6 p-8 rounded-lg">
+                        <div
+                            class="relative bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center my-6 p-8 rounded-lg">
                             <div class="text-center">
-                                <h1 class="text-white text-2xl md:text-3xl font-bold mb-4">
+                                <h1 class="text-dark text-2xl md:text-3xl font-bold mb-4">
                                     Selamat Datang {{ Auth::user()->name }}!
                                 </h1>
-                                <p class="text-white text-base md:text-lg max-w-3xl">
-                                    Aplikasi ini dirancang untuk membantu UMKM dalam mengelola dan memverifikasi produk halal mereka.
-                                    Anda dapat mendaftarkan produk, melacak status verifikasi, dan mengelola informasi UMKM Anda dengan mudah.
+                                <p class="text-dark text-base md:text-lg max-w-3xl">
+                                    Aplikasi ini dirancang untuk membantu UMKM dalam mengelola dan memverifikasi produk
+                                    halal mereka.
+                                    Anda dapat mendaftarkan produk, melacak status verifikasi, dan mengelola informasi
+                                    UMKM Anda dengan mudah.
                                 </p>
                             </div>
                         </div>
@@ -85,7 +88,7 @@
                                                     <span
                                                         class="px-1 inline-flex text-xs leading-4 font-semibold rounded-full {{ $product->verification_status ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100' }}">
                                                         {{ $product->verification_status ? 'Perlu Sertifikasi' : 'Tidak Perlu
-                                                                                                                                                            Sertifikasi' }}
+                                                                                                                                                                    Sertifikasi' }}
                                                     </span>
                                                 </div>
                                                 <div class="flex justify-center space-x-1">
